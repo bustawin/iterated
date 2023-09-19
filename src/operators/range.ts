@@ -1,4 +1,4 @@
-import {It} from "../utils";
+import { It } from '../utils'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

@@ -1,6 +1,6 @@
 import { expectType } from 'tsd-lite'
 import it from '@src'
-import { AIt, It } from '@adapters/iter/utils'
+import type { It, AIt } from '@src/utils'
 
 const r1 = it.map([1, 2, 3], it.identity)
 expectType<It<number>>(r1)

@@ -1,7 +1,7 @@
 import * as m from '../map'
-import {AIt, AIterVal, AnyIt, identity, InOut, It} from "../utils";
-import {chooseFunc} from "../iterators";
-import {toPipe} from "../pipe";
+import { AIt, AIterVal, AnyIt, identity, InOut, It } from '../utils'
+import { chooseFunc } from '../iterators'
+import { toPipe } from '../pipe'
 
 function _group<IterValue, T = IterValue>(
   iter: It<IterValue>,

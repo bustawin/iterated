@@ -1,6 +1,6 @@
 import it from '@src'
-import { It } from '@adapters/iter/utils'
 import { expectType } from 'tsd-lite'
+import type { It } from '@src/utils'
 
 // todo these are wrong, because we are removing
 const a = it.filter([1, 2, 3], 1)

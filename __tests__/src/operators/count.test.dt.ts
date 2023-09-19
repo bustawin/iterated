@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { expectType } from 'tsd-lite'
 import it from '@src'
 

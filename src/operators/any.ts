@@ -1,7 +1,7 @@
-import {It, Val} from "../utils";
-import {iterator, next} from "../iterators";
-import {filter} from "./filter";
-import {toPipe} from "../pipe";
+import { It, Val } from '../utils'
+import { iterator, next } from '../iterators'
+import { filter } from './filter'
+import { toPipe } from '../pipe'
 
 /**
  * Checks if any element in the given iterable satisfies the given condition.

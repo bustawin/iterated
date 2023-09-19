@@ -1,10 +1,11 @@
+/* eslint-disable */
 import it from '@src'
 
 describe('iter', () => {
   describe('map', () => {
     test('Iterates through values', () => {
       const r = it.map([1, 2, 3, 4], (x) => x + 1)
-      expect(r).toIterEq([2, 3, 4, 5])
+      expect(it.a.array(r)).toEqual([2, 3, 4, 5])
     })
   })
 
@@ -39,30 +40,7 @@ describe('iter', () => {
       )
 
       const r = it.count(input)
-      expect(r).toIterEq(result)
-    })
-  })
-
-  describe('includes', () => {
-    test('any no val', () => {
-      const input = 'AAAABBBCCD'
-
-      const x = it.any(input, 55)
-
-      const x = it.pipe(
-        [1, 2, 3],
-        it.map.p((x) => x.toString()),
-        it.any.p((x) => x == '2'),
-      )
-
-      const x = it.pipe(
-        [1, 2, 3],
-        it.map.p((x) => x.toString()),
-        it.filter.p('3'),
-      )
-
-      const r = it.count(input)
-      expect(r).toIterEq(result)
+      expect(r).toEqual(result)
     })
   })
 })

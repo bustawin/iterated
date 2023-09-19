@@ -1,6 +1,6 @@
-import {It, notDefined} from "../utils";
-import {nextValue} from "../iterators";
-import {toPipe} from "../pipe";
+import { It, notDefined } from '../utils'
+import { nextValue } from '../iterators'
+import { toPipe } from '../pipe'
 
 export function reduce<IterValue>(
   iter: It<IterValue>,

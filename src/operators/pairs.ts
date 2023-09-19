@@ -1,6 +1,6 @@
-import {It} from "../utils";
-import {iterator, next} from "../iterators";
-import {toPipe} from "../pipe";
+import { It } from '../utils'
+import { iterator, next } from '../iterators'
+import { toPipe } from '../pipe'
 
 export function* pairs<IterValue>(
   iter: It<IterValue>,

@@ -1,4 +1,4 @@
-import {AIt, It, rArray} from "./utils";
+import { AIt, It, rArray } from './utils'
 
 export function array<IterValue>(iter: It<IterValue>): rArray<IterValue> {
   return [...iter]

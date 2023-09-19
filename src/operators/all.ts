@@ -1,6 +1,6 @@
-import {It, Val} from "../utils";
-import {any} from "./any";
-import {toPipe} from "../pipe";
+import { It, Val } from '../utils'
+import { any } from './any'
+import { toPipe } from '../pipe'
 
 export function all<IterValue>(
   iter: It<IterValue>,

@@ -1,5 +1,5 @@
-import {It, Val} from "../utils";
-import {toPipe} from "../pipe";
+import { It, Val } from '../utils'
+import { toPipe } from '../pipe'
 
 export function* tap<IterValue, R>(
   iter: It<IterValue>,

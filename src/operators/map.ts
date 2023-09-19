@@ -1,6 +1,6 @@
-import {AIt, AIterVal, AnyIt, ConditionalIter, It, ValFunc} from "../utils";
-import {chooseFunc} from "../iterators";
-import {toPipe} from "../pipe";
+import { AIt, AIterVal, AnyIt, ConditionalIter, It, ValFunc } from '../utils'
+import { chooseFunc } from '../iterators'
+import { toPipe } from '../pipe'
 
 function* _map<IterValue, R>(iter: It<IterValue>, func: ValFunc<IterValue, R>): It<R> {
   for (const v of iter) {

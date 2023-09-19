@@ -1,5 +1,5 @@
-import {It, Val} from "../utils";
-import {toPipe} from "../pipe";
+import { It, Val } from '../utils'
+import { toPipe } from '../pipe'
 
 interface Matcher<T> {
   (val: Val<T>): boolean

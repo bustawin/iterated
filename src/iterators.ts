@@ -1,4 +1,4 @@
-import {AIt, AIterVal, AnyIt, It, NoValueToGet} from "./utils";
+import { AIt, AIterVal, AnyIt, It, NoValueToGet } from './utils'
 
 export function iterator<T>(iter: Iterable<T>): Iterator<T>
 export function iterator<T>(aIter: AsyncIterable<T>): AsyncIterator<T>
@@ -25,11 +25,13 @@ export function nextValue<T>(iter: Iterable<T>): T {
 }
 
 export function isIterable<T>(value: object): value is Iterable<T> {
-  return Symbol.iterator in value
+  // @ts-ignore
+  return value != null && typeof value[Symbol.iterator] === 'function'
 }
 
 export function isAsyncIterable<T>(value: object): value is AIt<T> {
-  return Symbol.asyncIterator in value
+  // @ts-ignore
+  return value != null && typeof value[Symbol.asyncIterator] === 'function'
 }
 
 export function isIterator<T>(value: object): value is Iterator<T> {

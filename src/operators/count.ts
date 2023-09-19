@@ -1,6 +1,6 @@
-import {identity, InOut, It} from "../utils";
+import { identity, InOut, It } from '../utils'
 import * as m from './../map'
-import {toPipe} from "../pipe";
+import { toPipe } from '../pipe'
 
 /**
  * Counts the number of occurrences of each value in an iterable.

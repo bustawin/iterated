@@ -1,5 +1,5 @@
-import {It} from "../utils";
-import {iterator, next} from "../iterators";
+import { It } from '../utils'
+import { iterator, next } from '../iterators'
 
 export function consume<IterValue>(iter: It<IterValue>): void {
   const it = iterator(iter)

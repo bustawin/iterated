@@ -1,5 +1,5 @@
-import {It, rArray, Val} from "../utils";
-import {toPipe} from "../pipe";
+import { It, rArray, Val } from '../utils'
+import { toPipe } from '../pipe'
 
 export function sort<IterValue>(
   iter: It<IterValue>,
