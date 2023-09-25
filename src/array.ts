@@ -1,11 +1,11 @@
-import { AIt, AnyIt, It, rArray } from './base'
+import { AIt, AnyIt, It } from './base'
 import { chooseFunc } from '@src/iterators'
 
-function _array<IterValue>(iter: It<IterValue>): rArray<IterValue> {
+function _array<IterValue>(iter: It<IterValue>): IterValue[] {
   return [...iter]
 }
 
-async function _aArray<IterValue>(iter: AIt<IterValue>): Promise<rArray<IterValue>> {
+async function _aArray<IterValue>(iter: AIt<IterValue>): Promise<IterValue[]> {
   const result: IterValue[] = []
   for await (const value of iter) {
     result.push(value)
@@ -13,6 +13,6 @@ async function _aArray<IterValue>(iter: AIt<IterValue>): Promise<rArray<IterValu
   return result
 }
 
-export function array<Iter extends AnyIt<unknown>>(iter: Iter) {
+export default function array<Iter extends AnyIt<unknown>>(iter: Iter) {
   return chooseFunc(iter, _array, _aArray)
 }

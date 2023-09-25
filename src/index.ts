@@ -1,17 +1,17 @@
-import * as array from './array'
+import array from './array'
 import * as iter from './iterators'
-import * as map from './map'
+import map from './map'
 import op from './operators'
 import pipe, * as pip from './pipe'
 import * as base from './base'
-import * as set from './set'
+import set from './set'
 
-export { It, AIt, AnyIt, rArray, AIterVal } from './base'
+export { It, AIt, AnyIt, AIterVal } from './base'
 
 const mod = {
-  a: array,
-  m: map,
-  s: set,
+  array,
+  Map: map,
+  set,
   pipe,
   ...pip,
   ...base,

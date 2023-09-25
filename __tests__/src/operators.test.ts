@@ -5,14 +5,14 @@ describe('iter', () => {
   describe('map', () => {
     test('Iterates through values', () => {
       const r = it.map([1, 2, 3, 4], (x) => x + 1)
-      expect(it.a.array(r)).toEqual([2, 3, 4, 5])
+      expect(it.array(r)).toEqual([2, 3, 4, 5])
     })
   })
 
   describe('Group', () => {
     test('Groups', () => {
       const input = 'AAAABBBCCD'
-      const grouped = it.m.map([
+      const grouped = it.Map([
         ['A', ['A', 'A', 'A', 'A']],
         ['B', ['B', 'B', 'B']],
         ['C', ['C', 'C']],
@@ -26,7 +26,7 @@ describe('iter', () => {
   describe('count', () => {
     test('count', () => {
       const input = 'AAAABBBCCD'
-      const result = it.m.map([
+      const result = it.Map([
         ['A', 4],
         ['B', 3],
         ['C', 2],

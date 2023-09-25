@@ -1,7 +1,6 @@
 export type It<T> = Iterable<T>
 export type AIt<T> = AsyncIterable<T>
 export type AnyIt<T> = It<T> | AIt<T>
-export type rArray<T> = ReadonlyArray<T>
 export type AIterVal<Iter> = Iter extends AnyIt<infer U> ? U : never
 
 export interface ValFunc<IterValue, R> {
@@ -13,11 +12,6 @@ export function identity<V>(val: V): V {
 }
 
 export class NoValueToGet extends Error {}
-
-// eslint-disable-next-line @typescript-eslint/ban-types
-export function isFunction(val: unknown): val is Function {
-  return val instanceof Function
-}
 
 export const notDefined: unique symbol = Symbol('not defined')
 

@@ -1,7 +1,7 @@
 import it from '@src'
 
 const newMap = () =>
-  it.m.map([
+  it.Map([
     [1, 'a'],
     [2, 'b'],
     [3, 'c'],
@@ -9,11 +9,11 @@ const newMap = () =>
 describe('map', () => {
   describe('setDefault', () => {
     describe('When the key is in the map', () => {
-      let r: ReturnType<typeof it.m.setDefault>
+      let r: ReturnType<typeof it.Map.setDefault>
       let map: ReturnType<typeof newMap>
       beforeAll(() => {
         map = newMap()
-        r = it.m.setDefault(map, 2, null)
+        r = it.Map.setDefault(map, 2, null)
       })
       test('Return its value', () => {
         expect(r).toEqual('b')
@@ -23,11 +23,11 @@ describe('map', () => {
       })
     })
     describe('When the key is not in the map', () => {
-      let r: ReturnType<typeof it.m.setDefault>
+      let r: ReturnType<typeof it.Map.setDefault>
       let map: ReturnType<typeof newMap>
       beforeAll(() => {
         map = newMap()
-        r = it.m.setDefault(map, -1, 'z')
+        r = it.Map.setDefault(map, -1, 'z')
       })
 
       test('Insert key with a value of default', () => {

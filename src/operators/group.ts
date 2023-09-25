@@ -1,4 +1,4 @@
-import * as m from '../map'
+import map from '../map'
 import { AIt, AIterVal, AnyIt, identity, It, ValFunc } from '../base'
 import { chooseFunc } from '../iterators'
 import { toPipe } from '../pipe'
@@ -10,7 +10,7 @@ function _group<IterValue, T = IterValue>(
   const grouped = new Map<T, IterValue[]>()
   for (const val of iter) {
     const groupKey = key(val)
-    const values = m.setDefault(grouped, groupKey, [])
+    const values = map.setDefault(grouped, groupKey, [])
     values.push(val)
   }
   return grouped
@@ -23,7 +23,7 @@ async function _agroup<IterValue, T = IterValue>(
   const grouped = new Map<T, IterValue[]>()
   for await (const val of iter) {
     const groupKey = key(val)
-    const values = m.setDefault(grouped, groupKey, [])
+    const values = map.setDefault(grouped, groupKey, [])
     values.push(val)
   }
   return grouped
