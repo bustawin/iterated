@@ -1,9 +1,9 @@
-import { It, Val } from '../utils'
+import { It } from '../utils'
 import { toPipe } from '../pipe'
 
 export function* tap<IterValue, R>(
   iter: It<IterValue>,
-  func: (val: Val<IterValue>) => Val<R>,
+  func: (val: IterValue) => R,
 ): It<IterValue> {
   for (const v of iter) {
     func(v)

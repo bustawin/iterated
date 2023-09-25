@@ -18,7 +18,7 @@ const d = it.pipe(
   it.range(5),
   it.group.p((x) => 'x'),
 )
-expectType<Map<'x', number[]>>(d)
+expectType<Map<string, number[]>>(d)
 
 // todo As we are forcing identity to work with the "as" keyword
 //  The following is accepted by the type checker when it shouldn't

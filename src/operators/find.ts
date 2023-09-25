@@ -1,11 +1,11 @@
 import { filter } from './filter'
-import { It, notDefined, NotFound, Val } from '../utils'
+import { It, notDefined, NotFound } from '../utils'
 import { iterator, next } from '../iterators'
 import { toPipe } from '../pipe'
 
 export function find<IterValue, T = IterValue>(
   iter: It<IterValue>,
-  func: IterValue | ((val: Val<IterValue>) => boolean),
+  func: IterValue | ((val: IterValue) => boolean),
   def: T | typeof notDefined = notDefined,
 ): IterValue | T {
   const result = next(iterator(filter(iter, func)))

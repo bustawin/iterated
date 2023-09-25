@@ -1,14 +1,12 @@
-export type Val<T> = T extends number ? T : T extends string ? T : Readonly<T>
-export type It<T> = Iterable<Val<T>>
-export type AIt<T> = AsyncIterable<Val<T>>
+export type It<T> = Iterable<T>
+export type AIt<T> = AsyncIterable<T>
 export type AnyIt<T> = It<T> | AIt<T>
 export type rArray<T> = ReadonlyArray<T>
-export type rPick<T, Y extends keyof T> = Val<Pick<T, Y>>
 export type ConditionalIter<Iter, V> = Iter extends It<any> ? It<V> : AIt<V>
 export type AIterVal<Iter> = Iter extends AnyIt<infer U> ? U : never
 
 export interface ValFunc<IterValue, R> {
-  (val: Val<IterValue>): Val<R>
+  (val: IterValue): R
 }
 
 export function identity<V>(val: V): V {
@@ -35,7 +33,7 @@ export function isSymbol(value: unknown): value is symbol {
 }
 
 export interface InOut<In, Out> {
-  (val: Val<In>): Val<Out>
+  (val: In): Out
 }
 
 export async function* async<IterValue>(it: It<IterValue>): AIt<IterValue> {

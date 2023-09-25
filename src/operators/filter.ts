@@ -1,8 +1,8 @@
-import { It, Val } from '../utils'
+import { It } from '../utils'
 import { toPipe } from '../pipe'
 
 interface Matcher<T> {
-  (val: Val<T>): boolean
+  (val: T): boolean
 }
 
 export function* filter<IterValue>(

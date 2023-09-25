@@ -6,7 +6,7 @@ const a = it.count('hello')
 expectType<Map<string, number>>(a)
 
 const b = it.count('hello', (x) => 3)
-expectType<Map<3, number>>(b)
+expectType<Map<number, number>>(b)
 
 const c = it.pipe('hello', it.count.p())
 expectType<Map<string, number>>(c)
@@ -15,7 +15,7 @@ const d = it.pipe(
   it.range(5),
   it.count.p((x) => 'x'),
 )
-expectType<Map<'x', number>>(d)
+expectType<Map<string, number>>(d)
 
 // todo As we are forcing identity to work with the "as" keyword
 //  The following is accepted by the type checker when it shouldn't

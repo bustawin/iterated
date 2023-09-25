@@ -4,10 +4,10 @@ import type { It } from '@src/utils'
 
 // todo these are wrong, because we are removing
 const a = it.filter([1, 2, 3], 1)
-expectType<It<1 | 2 | 3>>(a)
+expectType<It<number>>(a)
 
 const a1 = it.filter(it.s.set(['foo', 'bar', 'baz']), (x) => x !== 'baz')
-expectType<It<'foo' | 'bar' | 'baz'>>(a1)
+expectType<It<string>>(a1)
 
 const a2 = it.filter.p(5)([1, 2, 3])
 expectType<It<number>>(a2)

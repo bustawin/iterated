@@ -6,7 +6,7 @@ const a = it.group('hello')
 expectType<Map<string, string[]>>(a)
 
 const b = it.group('hello', (x) => 3)
-expectType<Map<3, string[]>>(b)
+expectType<Map<number, string[]>>(b)
 
 const c = it.pipe('hello', it.group.p())
 expectType<Map<string, string[]>>(c)
@@ -15,7 +15,7 @@ const d = it.pipe(
   it.range(5),
   it.group.p((x) => 'x'),
 )
-expectType<Map<'x', number[]>>(d)
+expectType<Map<string, number[]>>(d)
 
 // todo As we are forcing identity to work with the "as" keyword
 //  The following is accepted by the type checker when it shouldn't
@@ -38,4 +38,4 @@ const p3 = it.pipe(
   it.async(it.range(4)),
   it.group.p((x) => 'b'),
 )
-expectType<Promise<Map<'b', number[]>>>(p3)
+expectType<Promise<Map<string, number[]>>>(p3)

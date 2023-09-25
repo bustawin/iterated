@@ -1,4 +1,4 @@
-import { It, Val } from '../utils'
+import { It } from '../utils'
 import { iterator, next } from '../iterators'
 import { filter } from './filter'
 import { toPipe } from '../pipe'
@@ -14,7 +14,7 @@ import { toPipe } from '../pipe'
  */
 export function any<IterValue>(
   iter: It<IterValue>,
-  condition: IterValue | ((val: Val<IterValue>) => boolean),
+  condition: IterValue | ((val: IterValue) => boolean),
 ): boolean {
   const result = next(iterator(filter(iter, condition)))
   return !result.done
