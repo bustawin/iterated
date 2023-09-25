@@ -1,4 +1,4 @@
-import { AIt, AIterVal, AnyIt, ConditionalIter, It, ValFunc } from '../utils'
+import { AIt, AIterVal, AnyIt, ConditionalIter, It, ValFunc } from '../base'
 import { chooseFunc } from '../iterators'
 import { toPipe } from '../pipe'
 

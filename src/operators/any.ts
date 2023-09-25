@@ -1,4 +1,4 @@
-import { It } from '../utils'
+import { It } from '../base'
 import { iterator, next } from '../iterators'
 import { filter } from './filter'
 import { toPipe } from '../pipe'

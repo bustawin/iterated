@@ -1,4 +1,4 @@
-import { It, notDefined } from '../utils'
+import { It, notDefined } from '../base'
 import { nextValue } from '../iterators'
 import { toPipe } from '../pipe'
 

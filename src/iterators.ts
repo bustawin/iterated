@@ -1,4 +1,4 @@
-import { AIt, AIterVal, AnyIt, It, NoValueToGet } from './utils'
+import { AIt, AIterVal, AnyIt, It, NoValueToGet } from './base'
 
 export function iterator<T>(iter: Iterable<T>): Iterator<T>
 export function iterator<T>(aIter: AsyncIterable<T>): AsyncIterator<T>

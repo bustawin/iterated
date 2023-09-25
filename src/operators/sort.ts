@@ -1,4 +1,4 @@
-import { It, rArray } from '../utils'
+import { It, rArray } from '../base'
 import { toPipe } from '../pipe'
 
 export function sort<IterValue>(

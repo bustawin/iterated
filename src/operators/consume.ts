@@ -1,4 +1,4 @@
-import { It } from '../utils'
+import { It } from '../base'
 import { iterator, next } from '../iterators'
 
 export function consume<IterValue>(iter: It<IterValue>): void {

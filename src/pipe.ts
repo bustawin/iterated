@@ -1,4 +1,4 @@
-import { AnyIt } from './utils'
+import { AnyIt } from './base'
 
 export function toPipe<It extends AnyIt<unknown>, P extends unknown[], R>(
   fn: (iter: It, ...args: P) => R,

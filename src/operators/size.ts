@@ -1,4 +1,4 @@
-import { It } from '../utils'
+import { It } from '../base'
 import { reduce } from './reduce'
 
 export function size<IterValue>(iter: It<IterValue>): number {

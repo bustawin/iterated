@@ -1,4 +1,4 @@
-import { identity, InOut, It } from '../utils'
+import { identity, InOut, It } from '../base'
 import * as m from './../map'
 import { toPipe } from '../pipe'
 
@@ -28,7 +28,7 @@ export function count<IterValue, T = IterValue>(
   const counter = new Map<T, number>()
   for (const val of iter) {
     const groupKey = key(val)
-    const count = m.setDefaultM(counter, groupKey, 0)
+    const count = m.setDefault(counter, groupKey, 0)
     counter.set(groupKey, count + 1)
   }
   return counter

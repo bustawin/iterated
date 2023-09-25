@@ -9,11 +9,11 @@ const newMap = () =>
 describe('map', () => {
   describe('setDefault', () => {
     describe('When the key is in the map', () => {
-      let r: ReturnType<typeof it.m.setDefaultM>
+      let r: ReturnType<typeof it.m.setDefault>
       let map: ReturnType<typeof newMap>
       beforeAll(() => {
         map = newMap()
-        r = it.m.setDefaultM(map, 2, null)
+        r = it.m.setDefault(map, 2, null)
       })
       test('Return its value', () => {
         expect(r).toEqual('b')
@@ -23,11 +23,11 @@ describe('map', () => {
       })
     })
     describe('When the key is not in the map', () => {
-      let r: ReturnType<typeof it.m.setDefaultM>
+      let r: ReturnType<typeof it.m.setDefault>
       let map: ReturnType<typeof newMap>
       beforeAll(() => {
         map = newMap()
-        r = it.m.setDefaultM(map, -1, 'z')
+        r = it.m.setDefault(map, -1, 'z')
       })
 
       test('Insert key with a value of default', () => {

@@ -1,4 +1,4 @@
-import { It } from '../utils'
+import { It } from '../base'
 import { toPipe } from '../pipe'
 
 export function* tap<IterValue, R>(

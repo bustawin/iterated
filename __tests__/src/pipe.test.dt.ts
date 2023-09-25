@@ -1,7 +1,6 @@
 /* eslint-disable */
-import it from '@src'
+import it, { It } from '@src'
 import { expectType } from 'tsd-lite'
-import type { It, AIt } from '@src/utils'
 
 const a = it.pipe(
   it.range(5),

@@ -1,5 +1,5 @@
 import { filter } from './filter'
-import { It, notDefined, NotFound } from '../utils'
+import { It, notDefined, NotFound } from '../base'
 import { iterator, next } from '../iterators'
 import { toPipe } from '../pipe'
 

@@ -1,12 +1,12 @@
-// noinspection ES6UnusedImports
-
 import * as array from './array'
 import * as iter from './iterators'
 import * as map from './map'
 import op from './operators'
 import pipe, * as pip from './pipe'
-import * as utils from './utils'
+import * as base from './base'
 import * as set from './set'
+
+export { It, AIt, AnyIt, rArray, ConditionalIter, AIterVal } from './base'
 
 const mod = {
   a: array,
@@ -14,7 +14,7 @@ const mod = {
   s: set,
   pipe,
   ...pip,
-  ...utils,
+  ...base,
   ...op,
   ...iter,
 }
