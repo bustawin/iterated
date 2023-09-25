@@ -1,4 +1,4 @@
-import { AIt, AIterVal, AnyIt, ConditionalIter, It, ValFunc } from '../base'
+import { AIt, AIterVal, AnyIt, It, ValFunc } from '../base'
 import { chooseFunc } from '../iterators'
 import { toPipe } from '../pipe'
 
@@ -20,7 +20,7 @@ async function* _amap<IterValue, R>(
 export function map<Iter extends AnyIt<unknown>, R>(
   iter: Iter,
   func: ValFunc<AIterVal<Iter>, R>,
-): ConditionalIter<Iter, R> {
+) {
   return chooseFunc(iter, _map, _amap, func)
 }
 

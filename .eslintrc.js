@@ -3,16 +3,18 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
   plugins: ['prettier'],
   parserOptions: {
     ecmaVersion: 2020,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   rules: {
-     'prettier/prettier': 'error'
-    // Add custom rules here
-    // e.g., '@typescript-eslint/explicit-function-return-type': 'off'
-  }
-};
+    'prettier/prettier': 'error',
+    '@typescript-eslint/ban-ts-comment': [
+      'error',
+      { 'ts-ignore': 'allow-with-description' },
+    ],
+  },
+}

@@ -1,4 +1,4 @@
-import { identity, InOut, It } from '../base'
+import { identity, It, ValFunc } from '../base'
 import * as m from './../map'
 import { toPipe } from '../pipe'
 
@@ -23,7 +23,7 @@ import { toPipe } from '../pipe'
  */
 export function count<IterValue, T = IterValue>(
   iter: It<IterValue>,
-  key: InOut<IterValue, T> = identity as InOut<IterValue, T>,
+  key: ValFunc<IterValue, T> = identity as ValFunc<IterValue, T>,
 ) {
   const counter = new Map<T, number>()
   for (const val of iter) {

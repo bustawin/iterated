@@ -6,7 +6,7 @@ import pipe, * as pip from './pipe'
 import * as base from './base'
 import * as set from './set'
 
-export { It, AIt, AnyIt, rArray, ConditionalIter, AIterVal } from './base'
+export { It, AIt, AnyIt, rArray, AIterVal } from './base'
 
 const mod = {
   a: array,
