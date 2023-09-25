@@ -12,15 +12,17 @@ import * as tap from './tap'
 import * as pairs from './pairs'
 import * as group from './group'
 import * as flatten from './flatten'
+import * as all from './all'
 
 const operators = {
+  ...all,
+  ...any,
   ...consume,
   ...count,
   ...filter,
   ...find,
   ...flatten,
   ...group,
-  ...any,
   ...map,
   ...pairs,
   ...range,

@@ -3,12 +3,21 @@ export type AIt<T> = AsyncIterable<T>
 export type AnyIt<T> = It<T> | AIt<T>
 export type AIterVal<Iter> = Iter extends AnyIt<infer U> ? U : never
 
-export interface ValFunc<IterValue, R> {
-  (val: IterValue): R
+export interface ValFunc<V, R> {
+  (val: V): R
+}
+
+export interface Matcher<V> {
+  (val: V): boolean
 }
 
 export function identity<V>(val: V): V {
   return val
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function isFunction(val: unknown): val is Function {
+  return val instanceof Function
 }
 
 export class NoValueToGet extends Error {}

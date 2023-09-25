@@ -13,12 +13,14 @@ describe('map', () => {
       let map: ReturnType<typeof newMap>
       beforeAll(() => {
         map = newMap()
-        r = it.Map.setDefault(map, 2, null)
       })
       test('Return its value', () => {
+        r = it.Map.setDefault(map, 2, null)
         expect(r).toEqual('b')
       })
+
       test('Keeps the original map intact', () => {
+        r = it.Map.setDefault(map, 2, null)
         expect(map).toEqual(newMap())
       })
     })
@@ -27,15 +29,35 @@ describe('map', () => {
       let map: ReturnType<typeof newMap>
       beforeAll(() => {
         map = newMap()
-        r = it.Map.setDefault(map, -1, 'z')
       })
-
       test('Insert key with a value of default', () => {
+        r = it.Map.setDefault(map, -1, 'z')
         expect(map).not.toEqual(newMap())
         expect(map.get(-1)).toEqual('z')
       })
       test('return default', () => {
+        r = it.Map.setDefault(map, -1, 'z')
         expect(r).toEqual('z')
+      })
+    })
+  })
+  describe('constructor', () => {
+    describe('When passing a sync iterable', () => {
+      test('Returns a map', () => {
+        const r = it.Map([[1, 2]])
+        expect(r).toEqual(new Map([[1, 2]]))
+      })
+    })
+    describe('When passing an async iterable', () => {
+      test('Returns a map within a promise', async () => {
+        const r = await it.Map(it.async([[1, 2]]))
+        expect(r).toEqual(new Map([[1, 2]]))
+      })
+    })
+    describe('When no passing anything', () => {
+      test('Returns an empty map', () => {
+        const r = it.Map()
+        expect(r).toEqual(new Map())
       })
     })
   })

@@ -1,27 +1,34 @@
 /* eslint-disable */
 import { expectError, expectType } from 'tsd-lite'
 import it from '@src'
+import exp = require('node:constants')
 
 // Function needs two parameters
 expectError(it.any(it.range(2)))
 
-const a = it.any('hello', 'x')
-expectType<boolean>(a)
+const s1 = it.any('hello', 'x')
+expectType<boolean>(s1)
 
-const b = it.any(it.range(3), (x) => x > 4)
-expectType<boolean>(b)
+const s2 = it.any(it.range(3), (x) => x > 4)
+expectType<boolean>(s2)
 
-const c = it.pipe('hello', it.group.p())
-expectType<Map<string, string[]>>(c)
+const a1 = it.any(it.async(it.range(3)), 4)
+expectType<Promise<boolean>>(a1)
 
-const d = it.pipe(
+const p1 = it.pipe('hello', it.any.p('h'))
+expectType<boolean>(p1)
+
+const p2 = it.pipe(
   it.range(5),
-  it.group.p((x) => 'x'),
+  it.any.p((x: number) => x === 4),
 )
-expectType<Map<string, number[]>>(d)
+expectType<boolean>(p2)
 
-// todo As we are forcing identity to work with the "as" keyword
-//  The following is accepted by the type checker when it shouldn't
-//  As identity returns type string what here is interpreted as number
-const e = it.group<string, number>('hello')
-expectType<Map<number, string[]>>(e)
+const p3 = it.pipe(
+  it.async(it.range(4)),
+  it.any.p((x) => x > 4),
+)
+expectType<Promise<boolean>>(p3)
+
+expectError(it.any('foo', (x: number) => x > 4))
+expectError(it.any(it.async('foo'), (x: number) => x > 4))

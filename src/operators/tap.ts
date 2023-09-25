@@ -1,12 +1,12 @@
-import { It } from '../base'
+import { identity, It } from '../base'
 import { toPipe } from '../pipe'
 
 export function* tap<IterValue, R>(
   iter: It<IterValue>,
-  func: (val: IterValue) => R,
+  func: (val: IterValue) => R = identity as never,
 ): It<IterValue> {
   for (const v of iter) {
-    func(v)
+    if (func !== identity) func(v)
     yield v
   }
 }

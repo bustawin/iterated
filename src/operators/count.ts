@@ -1,5 +1,5 @@
 import { identity, It, ValFunc } from '../base'
-import Map from './../map'
+import it from '@src'
 import { toPipe } from '../pipe'
 
 /**
@@ -25,10 +25,10 @@ export function count<IterValue, T = IterValue>(
   iter: It<IterValue>,
   key: ValFunc<IterValue, T> = identity as ValFunc<IterValue, T>,
 ) {
-  const counter = Map<T, number>()
+  const counter = it.Map<T, number>()
   for (const val of iter) {
     const groupKey = key(val)
-    const count = Map.setDefault(counter, groupKey, 0)
+    const count = it.Map.setDefault(counter, groupKey, 0)
     counter.set(groupKey, count + 1)
   }
   return counter
