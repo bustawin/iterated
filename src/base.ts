@@ -30,7 +30,7 @@ export class NotFound<T> extends Error {
   }
 }
 
-export async function* async<IterValue>(it: It<IterValue>): AIt<IterValue> {
+export async function* async<V>(it: It<V>): AIt<V> {
   for (const item of it) {
     yield item
   }
