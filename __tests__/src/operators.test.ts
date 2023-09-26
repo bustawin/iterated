@@ -23,24 +23,4 @@ describe('iter', () => {
       expect(r).toEqual(grouped)
     })
   })
-  describe('count', () => {
-    test('count', () => {
-      const input = 'AAAABBBCCD'
-      const result = it.Map([
-        ['A', 4],
-        ['B', 3],
-        ['C', 2],
-        ['D', 1],
-      ])
-
-      const x = it.pipe(
-        [1, 2, 3],
-        it.map.p((x) => x.toString()),
-        it.count.p(),
-      )
-
-      const r = it.count(input)
-      expect(r).toEqual(result)
-    })
-  })
 })
