@@ -1,7 +1,7 @@
 export type It<T> = Iterable<T>
 export type AIt<T> = AsyncIterable<T>
 export type AnyIt<T> = It<T> | AIt<T>
-export type AIterVal<Iter> = Iter extends AnyIt<infer U> ? U : never
+export type AnyItV<Iter> = Iter extends AnyIt<infer U> ? U : never
 
 export interface ValFunc<V, R> {
   (val: V): R
@@ -25,7 +25,7 @@ export class NoValueToGet extends Error {}
 export const notDefined: unique symbol = Symbol('not defined')
 
 export class NotFound<T> extends Error {
-  constructor(val: T, iterable: It<T>) {
+  constructor(val: T, iterable: AnyIt<T>) {
     super(`${val} not found in ${iterable}`)
   }
 }

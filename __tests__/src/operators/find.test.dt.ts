@@ -3,24 +3,26 @@ import it from '@src'
 
 /* Calling the function */
 // Ensure func is from the same type as iter
-expectError(it.find(it.range(1), '5'))
 // Or a function accepting iter val
 expectError(it.find(it.range(1), (x: string) => true))
 
-const a = it.find('hello', 'h')
-expectType<string>(a)
+const s1 = it.find(it.range(4), (x) => x == 4, 3)
+expectType<number>(s1)
 
-const b = it.find('hello', '9', 'k')
-expectType<string>(b)
+const s2 = it.find('hello', (x) => x == '9', 'k')
+expectType<string>(s2)
 
-const c = it.find('hello', 'x', 8)
-expectType<string | 8>(c)
+const s3 = it.find('hello', (x) => x == 'h', 8)
+expectType<string | 8>(s3)
 
-const d = it.find.p(5)([1, 2, 3])
-expectType<number>(d)
+const s4 = it.find(it.range(5), (x) => x > 10, undefined)
+expectType<number | undefined>(s4)
 
-const e = it.find(it.range(5), (x) => x > 10, undefined)
-expectType<number | undefined>(e)
+const p1 = it.pipe(
+  it.range(5),
+  it.find.p((x) => x == 4, null),
+)
+expectType<number | null>(p1)
 
-const f = it.pipe(it.range(5), it.find.p(9, null))
-expectType<number | null>(f)
+const a1 = it.find(it.async('123'), (x) => x == '1')
+expectType<Promise<string>>(a1)

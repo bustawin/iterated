@@ -1,4 +1,4 @@
-import { AIt, AIterVal, AnyIt, It, ValFunc } from '../base'
+import { AIt, AnyItV, AnyIt, It, ValFunc } from '../base'
 import { chooseFunc } from '../iterators'
 import { toPipe } from '../pipe'
 
@@ -13,7 +13,7 @@ import { toPipe } from '../pipe'
  */
 export function map<Iter extends AnyIt<unknown>, R>(
   iter: Iter,
-  func: ValFunc<AIterVal<Iter>, R>,
+  func: ValFunc<AnyItV<Iter>, R>,
 ) {
   return chooseFunc(iter, _map, _amap, func)
 }

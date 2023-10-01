@@ -1,5 +1,5 @@
 import map from '../map'
-import { AIt, AIterVal, AnyIt, identity, It, ValFunc } from '../base'
+import { AIt, AnyItV, AnyIt, identity, It, ValFunc } from '../base'
 import { chooseFunc } from '../iterators'
 import { toPipe } from '../pipe'
 
@@ -29,9 +29,9 @@ async function _agroup<IterValue, T = IterValue>(
   return grouped
 }
 
-export function group<Iter extends AnyIt<unknown>, T = AIterVal<Iter>>(
+export function group<Iter extends AnyIt<unknown>, T = AnyItV<Iter>>(
   iter: Iter,
-  key: ValFunc<AIterVal<Iter>, T> = identity as ValFunc<AIterVal<Iter>, T>,
+  key: ValFunc<AnyItV<Iter>, T> = identity as ValFunc<AnyItV<Iter>, T>,
 ) {
   return chooseFunc(iter, _group, _agroup, key)
 }

@@ -1,4 +1,4 @@
-import { It } from '../base'
+import { It } from '@src'
 import { toPipe } from '../pipe'
 
 export function* flatten<IterValue>(iter: It<It<IterValue>>): It<IterValue> {

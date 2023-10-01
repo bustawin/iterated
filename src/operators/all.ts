@@ -1,11 +1,11 @@
-import { AIt, AIterVal, AnyIt, isFunction, It, ValFunc } from '../base'
+import { AIt, AnyIt, isFunction, It, AnyItV, Matcher } from '../base'
 import { any } from './any'
 import { toPipe } from '../pipe'
 import { chooseFunc } from '@src/iterators'
 
-export function all<Iter extends AnyIt<V>, V = AIterVal<Iter>>(
+export function all<Iter extends AnyIt<V>, V = AnyItV<Iter>>(
   iter: Iter,
-  condition: V | ValFunc<V, boolean>,
+  condition: V | Matcher<V>,
 ) {
   const negatedCondition = (val: V) =>
     !(isFunction(condition) ? condition(val) : val === condition)
@@ -13,13 +13,13 @@ export function all<Iter extends AnyIt<V>, V = AIterVal<Iter>>(
   return chooseFunc(iter, _all, _aAll, negatedCondition)
 }
 
-function _all<V>(iter: It<V>, negatedCondition: V | ValFunc<V, boolean>): boolean {
+function _all<V>(iter: It<V>, negatedCondition: V | Matcher<V>): boolean {
   return !any(iter, negatedCondition)
 }
 
 async function _aAll<V>(
   iter: AIt<V>,
-  negatedCondition: V | ValFunc<V, boolean>,
+  negatedCondition: V | Matcher<V>,
 ): Promise<boolean> {
   return !(await any(iter, negatedCondition))
 }

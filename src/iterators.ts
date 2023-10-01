@@ -1,4 +1,4 @@
-import { AIt, AIterVal, AnyIt, It, NoValueToGet } from './base'
+import { AIt, AnyItV, AnyIt, It, NoValueToGet } from './base'
 
 export function iterator<T>(iter: Iterable<T>): Iterator<T>
 export function iterator<T>(aIter: AsyncIterable<T>): AsyncIterator<T>
@@ -50,11 +50,11 @@ export function isIterator<T>(value: object): value is Iterator<T> {
  */
 export function chooseFunc<Iter extends AnyIt<unknown>, P extends unknown[], R, R1>(
   iter: Iter,
-  func: (iter: It<AIterVal<Iter>>, ...args: P) => R,
-  afunc: (iter: AIt<AIterVal<Iter>>, ...args: P) => R1,
+  func: (iter: It<AnyItV<Iter>>, ...args: P) => R,
+  afunc: (iter: AIt<AnyItV<Iter>>, ...args: P) => R1,
   ...args: P
 ): Iter extends It<unknown> ? R : R1 {
-  if (isIterable<AIterVal<Iter>>(iter)) {
+  if (isIterable<AnyItV<Iter>>(iter)) {
     // @ts-ignore: typescript can't understand returning only R is ok here
     return func(iter, ...args)
   }

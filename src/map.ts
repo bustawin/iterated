@@ -1,5 +1,5 @@
 import { chooseFunc } from '@src/iterators'
-import { AIt, AIterVal, AnyIt, It } from '@src/base'
+import { AIt, AnyItV, AnyIt, It } from '@src/base'
 
 /**
  * If key is in the map, return its value.
@@ -27,8 +27,8 @@ function _map<K, V>(iter: Iterable<[K, V]>): Map<K, V> {
 export default function map<K, V, Iter extends AnyIt<[K, V]> = It<[K, V]>>(
   iter: Iter = [] as never,
 ): Iter extends It<[unknown, unknown]>
-  ? Map<AIterVal<Iter>[0], AIterVal<Iter>[1]>
-  : Promise<Map<AIterVal<Iter>[0], AIterVal<Iter>[1]>> {
+  ? Map<AnyItV<Iter>[0], AnyItV<Iter>[1]>
+  : Promise<Map<AnyItV<Iter>[0], AnyItV<Iter>[1]>> {
   // @ts-ignore: typescript can't infer correctly this
   return chooseFunc(iter, _map, _aMap)
 }
