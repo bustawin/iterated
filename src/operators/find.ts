@@ -5,7 +5,7 @@ import { toPipe } from '../pipe'
 
 export function find<Iter extends AnyIt<V>, V = AnyItV<Iter>, D = V>(
   iter: Iter,
-  condition: Matcher<V>,
+  condition: V | Matcher<V>,
   def: D | typeof notDefined = notDefined,
 ) {
   return chooseFunc(iter, _find, _aFind, condition, def)

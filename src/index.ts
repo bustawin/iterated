@@ -15,6 +15,7 @@ const mod = {
   pipe,
   ...pip,
   ...base,
+  await: base.await_,
   ...op,
   ...iter,
 }

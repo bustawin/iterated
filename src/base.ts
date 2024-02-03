@@ -35,3 +35,9 @@ export async function* async<V>(it: It<V>): AIt<V> {
     yield item
   }
 }
+
+export async function* await_<V>(it: AIt<Promise<V>>): AIt<V> {
+  for await (const value of it) {
+    yield value
+  }
+}
