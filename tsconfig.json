@@ -1,7 +1,9 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
+    "module": "ES6",
     "declaration": true,
+    "moduleResolution": "Bundler",
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
