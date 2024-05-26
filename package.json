@@ -1,7 +1,7 @@
 {
   "name": "iterated",
   "version": "0.0.1",
-  "description": "f",
+  "description": "Functional methods (e.g. pipe, map, groupBy) to work with Javascript Iterables—with prime typing support.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
@@ -19,7 +19,7 @@
     "iterator"
   ],
   "author": "bustawin",
-  "license": "ISC",
+  "license": "CC BY 4.0",
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.3",
     "@tsd/typescript": "^5.2.2",
