@@ -4,6 +4,7 @@
   "description": "f",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "test": "jest",
     "build": "tsc && tsc-alias",
