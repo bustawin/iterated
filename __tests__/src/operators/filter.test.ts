@@ -1,5 +1,4 @@
 import it from '@src'
-import exp = require('node:constants')
 
 describe('filter', () => {
   describe('When passing a sync iterable', () => {

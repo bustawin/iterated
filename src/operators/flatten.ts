@@ -1,10 +1,27 @@
-import { It } from '@src'
-import { toPipe } from '../pipe'
+import { AIt, AnyIt, It } from '@src'
+import { chooseFunc } from '@src/iterators'
 
-export function* flatten<IterValue>(iter: It<It<IterValue>>): It<IterValue> {
-  for (const el of iter) {
+export type AnyItItV<Iter> = Iter extends AnyIt<infer U>
+  ? U extends It<infer V>
+    ? V
+    : never
+  : never
+
+/**
+ * Flattens one level the passed-in nested iterable.
+ */
+export function flatten<Iter extends AnyIt<It<V>>, V = AnyItItV<Iter>>(iter: Iter) {
+  return chooseFunc(iter, _flatten, _aFlatten)
+}
+
+async function* _aFlatten<V>(iter: AIt<It<V>>): AIt<V> {
+  for await (const el of iter) {
     yield* el
   }
 }
 
-flatten.p = toPipe(flatten)
+function* _flatten<V>(iter: It<It<V>>): It<V> {
+  for (const el of iter) {
+    yield* el
+  }
+}
