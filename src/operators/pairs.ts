@@ -1,10 +1,21 @@
-import { It } from '../base'
-import { iterator, next } from '../iterators'
-import { toPipe } from '../pipe'
+import { AIt, AnyIt, AnyItV, It } from '@src/base'
+import { chooseFunc, iterator, next } from '@src/iterators'
 
-export function* pairs<IterValue>(
-  iter: It<IterValue>,
-): It<Readonly<[IterValue, IterValue]>> {
+/**
+ * Pairs the passed-in elements of the iterable. If the iterable has less than
+ * two values it returns empty.
+ *
+ * @example
+ * pairs('ABCDEFG') // Returns AB BC CD DE EF FG
+ *
+ * @param iter A sync or async iterable.
+ * @return Returns an iterable whose values are lists of two elements.
+ */
+export function pairs<Iter extends AnyIt<V>, V = AnyItV<Iter>>(iter: Iter) {
+  return chooseFunc(iter, _pairs, _aPairs)
+}
+
+function* _pairs<V>(iter: It<V>): It<[V, V]> {
   const it = iterator(iter)
   let result = next(it)
   while (!result.done) {
@@ -18,4 +29,16 @@ export function* pairs<IterValue>(
   }
 }
 
-pairs.p = toPipe(pairs)
+async function* _aPairs<V>(iter: AIt<V>): AIt<[V, V]> {
+  const it = iterator(iter)
+  let result = await next(it)
+  while (!result.done) {
+    const a = result.value
+    result = await next(it)
+    if (result.done) {
+      break
+    }
+    const b = result.value
+    yield [a, b]
+  }
+}
