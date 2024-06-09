@@ -1,4 +1,4 @@
-import { It } from '../base'
+import { It } from '@src/base'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -17,7 +17,15 @@ export function* range(a, b, step = 1) {
     stop = b
   }
 
-  for (let i = start; i < stop; i += step) {
-    yield i
+  if (step > 0) {
+    for (let i = start; i < stop; i += step) {
+      yield i
+    }
+  } else if (step < 0) {
+    for (let i = start; i > stop; i += step) {
+      yield i
+    }
+  } else {
+    throw new RangeError("step value can't be 0")
   }
 }

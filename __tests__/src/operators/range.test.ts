@@ -15,4 +15,9 @@ describe('range function tests', () => {
     const result = it.range(2, 8, 2)
     expect(it.array(result)).toEqual([2, 4, 6])
   })
+
+  test('range when going backwards', () => {
+    const result = it.range(5, -2, -1)
+    expect(it.array(result)).toEqual([5, 4, 3, 2, 1, 0, -1])
+  })
 })
