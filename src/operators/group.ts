@@ -1,7 +1,24 @@
 import map from '../map'
-import { AIt, AnyItV, AnyIt, identity, It, ValFunc } from '../base'
+import { AIt, AnyIt, AnyItV, identity, It, ValFunc } from '../base'
 import { chooseFunc } from '../iterators'
 import { toPipe } from '../pipe'
+
+/**
+ * Groups the passed-in iterable by the given key.
+ *
+ * @param iter A sync or async iterable.
+ * @param key A function computing the key, such as `item => item['foo']`. Key
+ * defaults to an identity function, grouping duplicated values.
+ * @return A Map where each key is a group.
+ */
+export function group<Iter extends AnyIt<unknown>, T = AnyItV<Iter>>(
+  iter: Iter,
+  key: ValFunc<AnyItV<Iter>, T> = identity as ValFunc<AnyItV<Iter>, T>,
+) {
+  return chooseFunc(iter, _group, _agroup, key)
+}
+
+group.p = toPipe(group)
 
 function _group<IterValue, T = IterValue>(
   iter: It<IterValue>,
@@ -28,12 +45,3 @@ async function _agroup<IterValue, T = IterValue>(
   }
   return grouped
 }
-
-export function group<Iter extends AnyIt<unknown>, T = AnyItV<Iter>>(
-  iter: Iter,
-  key: ValFunc<AnyItV<Iter>, T> = identity as ValFunc<AnyItV<Iter>, T>,
-) {
-  return chooseFunc(iter, _group, _agroup, key)
-}
-
-group.p = toPipe(group)

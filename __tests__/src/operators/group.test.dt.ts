@@ -8,6 +8,15 @@ expectType<Map<string, string[]>>(a)
 const b = it.group('hello', (x) => 3)
 expectType<Map<number, string[]>>(b)
 
+const b1 = it.group(
+  [
+    { foo: 1, baz: 'x' },
+    { foo: 2, baz: 'x' },
+  ],
+  (item) => item['foo'],
+)
+expectType<Map<number, { foo: number; baz: string }[]>>(b1)
+
 const c = it.pipe('hello', it.group.p())
 expectType<Map<string, string[]>>(c)
 
