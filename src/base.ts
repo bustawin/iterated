@@ -2,6 +2,8 @@ export type It<T> = Iterable<T>
 export type AIt<T> = AsyncIterable<T>
 export type AnyIt<T> = It<T> | AIt<T>
 export type AnyItV<Iter> = Iter extends AnyIt<infer U> ? U : never
+export type AnyIterator<V> = Iterator<V> | AsyncIterator<V>
+export type AnyIteratorV<Iter> = Iter extends AnyIterator<infer U> ? U : never
 
 export interface ValFunc<V, R> {
   (val: V): R

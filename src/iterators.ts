@@ -1,4 +1,4 @@
-import { AIt, AnyItV, AnyIt, It, NoValueToGet } from './base'
+import { AIt, AnyItV, AnyIt, It, NoValueToGet, AnyIterator, AnyIteratorV } from './base'
 
 export function iterator<T>(iter: Iterable<T>): Iterator<T>
 export function iterator<T>(aIter: AsyncIterable<T>): AsyncIterator<T>
@@ -17,8 +17,21 @@ export function next(iter) {
   return iter.next()
 }
 
-export function nextValue<T>(iter: Iterable<T>): T {
-  const r = next(iterator(iter))
+export function nextValue<Iter extends AnyIterator<V>, V = AnyIteratorV<Iter>>(
+  iter: Iter,
+): Iter extends Iterator<unknown> ? V : Promise<V> {
+  // @ts-ignore chooseFunc typing uses iterable not iterator types
+  return chooseFunc(iter, _nextValue, _aNextValue)
+}
+
+function _nextValue<T>(iter: Iterator<T>) {
+  const r = next(iter)
+  if (r.done) throw new NoValueToGet()
+
+  return r.value
+}
+async function _aNextValue<V>(iter: AsyncIterator<V>) {
+  const r = await next(iter)
   if (r.done) throw new NoValueToGet()
 
   return r.value
