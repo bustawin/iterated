@@ -1,4 +1,4 @@
-import { AIt, AnyItV, AnyIt, It, Matcher } from '../base'
+import { AIt, AnyIt, AnyItV, It, Matcher } from '../base'
 import { chooseFunc, iterator, next } from '../iterators'
 import { filter } from './filter'
 import { toPipe } from '../pipe'
@@ -12,7 +12,7 @@ import { toPipe } from '../pipe'
  * @param condition - The condition to satisfy.
  * @return Returns true if any element satisfies the condition, otherwise false.
  */
-export function any<Iter extends AnyIt<V>, V = AnyItV<Iter>>(
+export function any<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   iter: Iter,
   condition: V | Matcher<V>,
 ) {

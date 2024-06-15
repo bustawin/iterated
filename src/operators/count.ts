@@ -1,4 +1,4 @@
-import { AIt, AnyItV, AnyIt, identity, It, ValFunc } from '../base'
+import { AIt, AnyIt, AnyItV, identity, It, ValFunc } from '../base'
 import it from '@src'
 import { toPipe } from '../pipe'
 import { chooseFunc } from '@src/iterators'
@@ -22,7 +22,7 @@ import { chooseFunc } from '@src/iterators'
  * @returns - A Map containing the count of each value.
  *
  */
-export function count<Iter extends AnyIt<V>, V = AnyItV<Iter>, T = V>(
+export function count<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, T = V>(
   iter: Iter,
   key: ValFunc<V, T> = identity as ValFunc<V, T>,
 ) {

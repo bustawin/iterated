@@ -13,7 +13,7 @@ async function _aArray<IterValue>(iter: AIt<IterValue>): Promise<IterValue[]> {
   return result
 }
 
-export default function array<V, Iter extends AnyIt<V> = It<V>>(
+export default function array<V, Iter extends AnyIt<unknown> = It<V>>(
   iter: Iter = [] as never,
 ) {
   return chooseFunc(iter, _array, _aArray)

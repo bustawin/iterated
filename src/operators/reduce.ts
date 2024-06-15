@@ -2,7 +2,7 @@ import { AIt, AnyIt, AnyItV, It, notDefined } from '@src/base'
 import { chooseFunc, iterator, next, nextValue } from '../iterators'
 import { toPipe } from '../pipe'
 
-export function reduce<Iter extends AnyIt<unknown>, V = AnyItV<Iter>, U = V>(
+export function reduce<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, U = V>(
   iter: Iter,
   func: (previousValue: U, currentValue: V) => U,
   initialValue:

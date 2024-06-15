@@ -1,4 +1,4 @@
-import { AIt, AnyItV, AnyIt, isFunction, It, Matcher } from '../base'
+import { AIt, AnyIt, AnyItV, isFunction, It, Matcher } from '../base'
 import { toPipe } from '../pipe'
 import { chooseFunc } from '@src/iterators'
 
@@ -9,7 +9,7 @@ import { chooseFunc } from '@src/iterators'
  * @param condition - The value or filtering function used for filtering elements.
  * @return The filtered iterable.
  */
-export function filter<Iter extends AnyIt<V>, V = AnyItV<Iter>>(
+export function filter<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   iter: Iter,
   condition: V | Matcher<V>,
 ) {

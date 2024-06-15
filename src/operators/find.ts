@@ -1,9 +1,9 @@
 import { filter } from './filter'
-import { AIt, AnyIt, It, AnyItV, Matcher, notDefined, NotFound } from '../base'
+import { AIt, AnyIt, AnyItV, It, Matcher, notDefined, NotFound } from '../base'
 import { chooseFunc, iterator, next } from '../iterators'
 import { toPipe } from '../pipe'
 
-export function find<Iter extends AnyIt<V>, V = AnyItV<Iter>, D = V>(
+export function find<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, D = V>(
   iter: Iter,
   condition: V | Matcher<V>,
   def: D | typeof notDefined = notDefined,
@@ -36,23 +36,6 @@ async function _aFind<V, D>(
   def: D | typeof notDefined,
 ): Promise<D | V> {
   const result = await next(iterator(filter(iter, condition)))
-  if (result.done) {
-    if (def !== notDefined) {
-      return def
-    }
-
-    throw new NotFound(condition, iter)
-  }
-
-  return result.value
-}
-
-function handleResult<V, D>(
-  result: IteratorResult<V, unknown>,
-  def: D | typeof notDefined,
-  condition: unknown,
-  iter: AnyIt<V>,
-): D | V {
   if (result.done) {
     if (def !== notDefined) {
       return def

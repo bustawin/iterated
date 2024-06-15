@@ -13,6 +13,8 @@ function _set<V>(iter: Iterable<V>): Set<V> {
   return new Set(iter)
 }
 
-export default function set<V, Iter extends AnyIt<V> = It<V>>(iter: Iter = [] as never) {
+export default function set<V, Iter extends AnyIt<unknown> = It<V>>(
+  iter: Iter = [] as never,
+) {
   return chooseFunc(iter, _set, _aSet)
 }

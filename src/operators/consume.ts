@@ -1,7 +1,7 @@
-import { AIt, AnyItV, AnyIt, It } from '../base'
+import { AIt, AnyIt, It } from '@src'
 import { chooseFunc, iterator, next } from '../iterators'
 
-export function consume<Iter extends AnyIt<V>, V = AnyItV<Iter>>(iter: Iter) {
+export function consume<Iter extends AnyIt<unknown>>(iter: Iter) {
   return chooseFunc(iter, _consume, _aConsume)
 }
 

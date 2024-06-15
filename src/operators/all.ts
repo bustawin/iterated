@@ -1,9 +1,9 @@
-import { AIt, AnyIt, isFunction, It, AnyItV, Matcher } from '../base'
+import { AIt, AnyIt, AnyItV, isFunction, It, Matcher } from '../base'
 import { any } from './any'
 import { toPipe } from '../pipe'
 import { chooseFunc } from '@src/iterators'
 
-export function all<Iter extends AnyIt<V>, V = AnyItV<Iter>>(
+export function all<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   iter: Iter,
   condition: V | Matcher<V>,
 ) {
