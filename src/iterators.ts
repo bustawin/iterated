@@ -1,4 +1,4 @@
-import { AIt, AnyItV, AnyIt, It, NoValueToGet, AnyIterator, AnyIteratorV } from './base'
+import { AIt, AnyIt, AnyIterator, AnyIteratorV, AnyItV, It, NoValueToGet } from './base'
 
 export function iterator<T>(iter: Iterable<T>): Iterator<T>
 export function iterator<T>(aIter: AsyncIterable<T>): AsyncIterator<T>
@@ -30,6 +30,7 @@ function _nextValue<T>(iter: Iterator<T>) {
 
   return r.value
 }
+
 async function _aNextValue<V>(iter: AsyncIterator<V>) {
   const r = await next(iter)
   if (r.done) throw new NoValueToGet()
@@ -61,10 +62,16 @@ export function isIterator<T>(value: object): value is Iterator<T> {
  * @returns The result of applying the chosen function to the iterable.
  * @throws {TypeError} - If iter is not an Iterable or AsyncIterable
  */
-export function chooseFunc<Iter extends AnyIt<unknown>, P extends unknown[], R, R1>(
+export function chooseFunc<
+  Iter extends AnyIt<unknown>,
+  V extends AnyItV<Iter>,
+  P extends unknown[],
+  R,
+  R1,
+>(
   iter: Iter,
-  func: (iter: It<AnyItV<Iter>>, ...args: P) => R,
-  afunc: (iter: AIt<AnyItV<Iter>>, ...args: P) => R1,
+  func: (iter: It<V>, ...args: P) => R,
+  afunc: (iter: AIt<V>, ...args: P) => R1,
   ...args: P
 ): Iter extends It<unknown> ? R : R1 {
   if (isIterable<AnyItV<Iter>>(iter)) {
