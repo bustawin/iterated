@@ -2,7 +2,7 @@ import { AIt, AnyIt, AnyItV, It, notDefined } from '@src/base'
 import { chooseFunc, iterator, next, nextValue } from '../iterators'
 import { toPipe } from '../pipe'
 
-export function reduce<Iter extends AnyIt<V>, V = AnyItV<Iter>, U = V>(
+export function reduce<Iter extends AnyIt<unknown>, V = AnyItV<Iter>, U = V>(
   iter: Iter,
   func: (previousValue: U, currentValue: V) => U,
   initialValue:
@@ -15,7 +15,7 @@ export function reduce<Iter extends AnyIt<V>, V = AnyItV<Iter>, U = V>(
 reduce.p = toPipe(reduce)
 
 async function _aReduce<V, U = V>(
-  iter: AIt<V>,
+  iter: AIt<unknown>,
   func: (previousValue: U, currentValue: V) => U,
   initialValue?: (U extends typeof notDefined ? never : U) | typeof notDefined,
 ) {
@@ -32,7 +32,7 @@ async function _aReduce<V, U = V>(
 }
 
 export function _reduce<V, U = V>(
-  iter: It<V>,
+  iter: It<unknown>,
   func: (previousValue: U, currentValue: V) => U,
   initialValue?: (U extends typeof notDefined ? never : U) | typeof notDefined,
 ) {

@@ -1,6 +1,6 @@
-import { It } from '../base'
+import { AnyIt } from '@src/base'
 import { reduce } from './reduce'
 
-export function size<IterValue>(iter: It<IterValue>): number {
+export function size<Iter extends AnyIt<unknown>>(iter: Iter) {
   return reduce(iter, (sum) => sum + 1, 0)
 }

@@ -1,4 +1,4 @@
-import { AIt, AnyIt, AnyItV, It } from '@src/base'
+import { AIt, AnyIt, It } from '@src/base'
 import { chooseFunc, iterator, next } from '@src/iterators'
 
 /**
@@ -11,7 +11,7 @@ import { chooseFunc, iterator, next } from '@src/iterators'
  * @param iter A sync or async iterable.
  * @return Returns an iterable whose values are lists of two elements.
  */
-export function pairs<Iter extends AnyIt<V>, V = AnyItV<Iter>>(iter: Iter) {
+export function pairs<Iter extends AnyIt<unknown>>(iter: Iter) {
   return chooseFunc(iter, _pairs, _aPairs)
 }
 
