@@ -5,6 +5,14 @@ import array from '@src/array'
 
 export type comparator = number
 
+/**
+ * Return a new sorted array from the passed-in iterable. This function
+ * internally calls the {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort|Array.sort}
+ * method, passing `comparator`.
+ *
+ * @param iter
+ * @param comparator
+ */
 export function sort<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   iter: Iter,
   comparator: (a: V, b: V) => comparator,

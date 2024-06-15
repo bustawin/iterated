@@ -6,6 +6,11 @@ describe('range function tests', () => {
     expect(it.array(result)).toEqual([0, 1, 2, 3, 4])
   })
 
+  test('range with negative stop', () => {
+    const result = it.range(-10)
+    expect(it.array(result)).toEqual([])
+  })
+
   test('range with start and stop', () => {
     const result = it.range(3, 7)
     expect(it.array(result)).toEqual([3, 4, 5, 6])
