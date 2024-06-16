@@ -5,7 +5,7 @@ import { expectType } from 'tsd-lite'
 const a = it.pipe(
   it.range(5),
   it.map((x) => x.toString()),
-  it.find.p('2'),
+  it.find('2'),
 )
 expectType<string>(a)
 

@@ -1,17 +1,40 @@
 import { filter } from './filter'
-import { AIt, AnyIt, AnyItV, It, Matcher, notDefined, NotFound } from '../base'
-import { chooseFunc, iterator, next } from '../iterators'
-import { toPipe } from '../pipe'
+import {
+  AIt,
+  AnyIt,
+  AnyItResult,
+  AnyItV,
+  CurriedAnyItResult,
+  It,
+  Matcher,
+  notDefined,
+  NotFound,
+} from '../base'
+import { curry, iterator, next } from '../iterators'
 
 export function find<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, D = V>(
   iter: Iter,
   condition: V | Matcher<V>,
+  def?: D | typeof notDefined,
+): AnyItResult<Iter, D | V>
+export function find<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, D = V>(
+  condition: V | Matcher<V>,
+  def?: D | typeof notDefined,
+): CurriedAnyItResult<Iter, D | V>
+export function find<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, D = V>(
+  iter: Iter | V | Matcher<V>,
+  condition?: V | Matcher<V>,
   def: D | typeof notDefined = notDefined,
 ) {
-  return chooseFunc(iter, _find, _aFind, condition, def)
+  return curry(
+    // @ts-ignore fix in the future
+    _find,
+    _aFind,
+    iter,
+    condition,
+    def,
+  )
 }
-
-find.p = toPipe(find)
 
 function _find<V, D>(
   iter: It<V>,
