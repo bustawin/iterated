@@ -1,7 +1,15 @@
-import { AIt, AnyIt, AnyItV, identity, It, ValFunc } from '../base'
+import {
+  AIt,
+  AnyIt,
+  AnyItResult,
+  AnyItV,
+  CurriedAnyItResult,
+  identity,
+  It,
+  ValFunc,
+} from '../base'
 import it from '@src'
-import { toPipe } from '../pipe'
-import { chooseFunc } from '@src/iterators'
+import { curry } from '@src/iterators'
 
 /**
  * Counts the number of occurrences of each value in an iterable.
@@ -24,12 +32,23 @@ import { chooseFunc } from '@src/iterators'
  */
 export function count<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, T = V>(
   iter: Iter,
+  key?: ValFunc<V, T>,
+): AnyItResult<Iter, Map<T, number>>
+export function count<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, T = V>(
+  key?: ValFunc<V, T>,
+): CurriedAnyItResult<Iter, Map<T, number>>
+export function count<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, T = V>(
+  iter: Iter | ValFunc<V, T> = identity as ValFunc<V, T>,
   key: ValFunc<V, T> = identity as ValFunc<V, T>,
 ) {
-  return chooseFunc(iter, _count, _aCount, key)
+  return curry(
+    // @ts-ignore fix in the future
+    _count,
+    _aCount,
+    iter,
+    key,
+  )
 }
-
-count.p = toPipe(count)
 
 function _count<V, T = V>(iter: It<V>, key: ValFunc<V, T>) {
   const counter = it.Map<T, number>()

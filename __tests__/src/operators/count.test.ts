@@ -29,6 +29,12 @@ describe('count', () => {
         expect(result).toEqual(it.Map([]))
       })
     })
+    describe('When running in a pipe', () => {
+      test('Returns a counter', () => {
+        const result = it.pipe(input, it.count())
+        expect(result).toEqual(expectedResult)
+      })
+    })
   })
   describe('when passing an async iterable', () => {
     describe('When no passing a property', () => {
