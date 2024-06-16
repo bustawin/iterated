@@ -31,7 +31,7 @@ describe('group', () => {
     })
 
     test('returns empty when passed empty', () => {
-      const result = it.pipe('', it.group.p())
+      const result = it.pipe('', it.group())
       expect(result).toEqual(it.Map())
     })
 
@@ -56,7 +56,7 @@ describe('group', () => {
           { foo: 2, bar: 4 },
         ],
         it.async,
-        it.group.p((x) => x['foo']),
+        it.group((x) => x['foo']),
       )
       expect(result).toEqual(
         it.Map([

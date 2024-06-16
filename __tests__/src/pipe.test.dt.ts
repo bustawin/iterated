@@ -9,7 +9,7 @@ const a = it.pipe(
 )
 expectType<string>(a)
 
-const b = it.pipe('hello', it.group.p())
+const b = it.pipe('hello', it.group())
 expectType<Map<string, string[]>>(b)
 
 const c = it.pipe(

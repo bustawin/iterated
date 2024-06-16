@@ -1,7 +1,15 @@
 import map from '../map'
-import { AIt, AnyIt, AnyItV, identity, It, ValFunc } from '../base'
-import { chooseFunc } from '../iterators'
-import { toPipe } from '../pipe'
+import {
+  AIt,
+  AnyIt,
+  AnyItResult,
+  AnyItV,
+  CurriedAnyItResult,
+  identity,
+  It,
+  ValFunc,
+} from '../base'
+import { curry } from '@src/iterators'
 
 /**
  * Groups the passed-in iterable by the given key.
@@ -13,12 +21,23 @@ import { toPipe } from '../pipe'
  */
 export function group<Iter extends AnyIt<unknown>, T = AnyItV<Iter>>(
   iter: Iter,
+  key?: ValFunc<AnyItV<Iter>, T>,
+): AnyItResult<Iter, Map<T, AnyItV<Iter>[]>>
+export function group<Iter extends AnyIt<unknown>, T = AnyItV<Iter>>(
+  key?: ValFunc<AnyItV<Iter>, T>,
+): CurriedAnyItResult<Iter, Map<T, AnyItV<Iter>[]>>
+export function group<Iter extends AnyIt<unknown>, T = AnyItV<Iter>>(
+  iter: Iter | ValFunc<AnyItV<Iter>, T> = identity as ValFunc<AnyItV<Iter>, T>,
   key: ValFunc<AnyItV<Iter>, T> = identity as ValFunc<AnyItV<Iter>, T>,
 ) {
-  return chooseFunc(iter, _group, _agroup, key)
+  return curry(
+    // @ts-ignore fix in the future
+    _group,
+    _agroup,
+    iter,
+    key,
+  )
 }
-
-group.p = toPipe(group)
 
 function _group<IterValue, T = IterValue>(
   iter: It<IterValue>,
