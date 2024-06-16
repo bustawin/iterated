@@ -9,6 +9,6 @@ expectType<Promise<string[]>>(a1)
 
 const p1 = it.pipe(
   [1, 2, 3],
-  it.sort.p((a, b) => a - b),
+  it.sort((a, b) => a - b),
 )
 expectType<number[]>(p1)

@@ -9,7 +9,6 @@ import {
   ValOrNotDefined,
 } from '@src/base'
 import { curry, iterator, next, nextValue } from '../iterators'
-import { toPipe } from '../pipe'
 
 export type Reducer<U, V> = (previousValue: U, currentValue: V) => U
 
@@ -63,5 +62,3 @@ export function _reduce<V, U = V>(
   }
   return previousValue as U
 }
-
-reduce.p = toPipe(reduce)

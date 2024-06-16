@@ -1,9 +1,9 @@
 import { AIt, AnyIt, AnyItV, It } from '@src'
-import { toPipe } from '../pipe'
-import { chooseFunc } from '@src/iterators'
+import { curry } from '@src/iterators'
 import array from '@src/array'
+import { AnyItResult, CurriedAnyItResult } from '@src/base'
 
-export type comparator = number
+type Comparator<V> = (a: V, b: V) => number
 
 /**
  * Return a new sorted array from the passed-in iterable. This function
@@ -15,18 +15,30 @@ export type comparator = number
  */
 export function sort<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   iter: Iter,
-  comparator: (a: V, b: V) => comparator,
+  comparator: Comparator<V>,
+): AnyItResult<Iter, V[]>
+export function sort<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
+  comparator: Comparator<V>,
+): CurriedAnyItResult<Iter, V[]>
+export function sort<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
+  iter: Iter | Comparator<V>,
+  comparator?: Comparator<V>,
 ) {
-  return chooseFunc(iter, _sort, _aSort, comparator)
+  return curry(
+    // @ts-ignore fix in the future
+    _sort,
+    _aSort,
+    iter,
+    comparator,
+  )
 }
 
-sort.p = toPipe(sort)
-
-async function _aSort<V>(iter: AIt<V>, comparator: (a: V, b: V) => comparator) {
+async function _aSort<V>(iter: AIt<V>, comparator: Comparator<V>) {
   const arr = await array(iter)
   return arr.sort(comparator)
 }
 
-function _sort<V>(iter: It<V>, comparator: (a: V, b: V) => comparator) {
+function _sort<V>(iter: It<V>, comparator: Comparator<V>) {
+  // if we target ES2023 we could use .toSorted and avoid a temporary array
   return [...iter].sort(comparator)
 }
