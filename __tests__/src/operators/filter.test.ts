@@ -17,7 +17,7 @@ describe('filter', () => {
       expect(it.array(result)).toEqual([])
     })
     test('returns empty when passed empty', () => {
-      const result = it.pipe('', it.filter.p('9'), it.array)
+      const result = it.pipe('', it.filter('9'), it.array)
       expect(result).toEqual([])
     })
   })
@@ -26,7 +26,7 @@ describe('filter', () => {
       const result = await it.pipe(
         it.range(6),
         it.async,
-        it.filter.p((num) => num > 3),
+        it.filter((num) => num > 3),
         it.array,
       )
       expect(result).toEqual([4, 5])
@@ -36,19 +36,19 @@ describe('filter', () => {
       const result = await it.pipe(
         [1, 1, 2, 3, 4, 5, 4],
         it.async,
-        it.filter.p(4),
+        it.filter(4),
         it.array,
       )
       expect(result).toEqual([4, 4])
     })
 
     test('returns an empty iterator when nothing matches', async () => {
-      const result = await it.pipe(it.range(2), it.async, it.filter.p(9), it.array)
+      const result = await it.pipe(it.range(2), it.async, it.filter(9), it.array)
       expect(result).toEqual([])
     })
 
     test('returns empty when passed empty', async () => {
-      const result = await it.pipe('', it.async, it.filter.p('9'), it.array)
+      const result = await it.pipe('', it.async, it.filter('9'), it.array)
       expect(result).toEqual([])
     })
   })

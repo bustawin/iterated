@@ -26,7 +26,7 @@ describe('pairs', () => {
       const result = await it.pipe(
         it.range(6),
         it.async,
-        it.filter.p((num) => num > 3),
+        it.filter((num) => num > 3),
         it.array,
       )
       expect(result).toEqual([4, 5])

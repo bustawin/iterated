@@ -1,6 +1,14 @@
-import { AIt, AnyIt, AnyItV, isFunction, It, Matcher } from '../base'
-import { toPipe } from '../pipe'
-import { chooseFunc } from '@src/iterators'
+import {
+  AIt,
+  AnyIt,
+  AnyItResultIt,
+  AnyItV,
+  CurriedAnyItResultIt,
+  isFunction,
+  It,
+  Matcher,
+} from '../base'
+import { curry } from '@src/iterators'
 
 /**
  * Filters elements from an iterable on a value or a filtering function.
@@ -12,11 +20,22 @@ import { chooseFunc } from '@src/iterators'
 export function filter<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   iter: Iter,
   condition: V | Matcher<V>,
+): AnyItResultIt<Iter, V>
+export function filter<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
+  condition: V | Matcher<V>,
+): CurriedAnyItResultIt<Iter, V>
+export function filter<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
+  iter: Iter | V | Matcher<V>,
+  condition?: V | Matcher<V>,
 ) {
-  return chooseFunc(iter, _filter, _aFilter, condition)
+  return curry(
+    // @ts-ignore fix in the future
+    _filter,
+    _aFilter,
+    iter,
+    condition,
+  )
 }
-
-filter.p = toPipe(filter)
 
 async function* _aFilter<V>(iter: AIt<V>, condition: V | Matcher<V>): AIt<V> {
   const f = matcher(condition)

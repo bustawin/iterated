@@ -120,7 +120,11 @@ export function curry<
 ): (iter: Iter) => CondIt<Iter, R, R1>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function curry(func: any, afunc: any, first: any, ...args: any[]) {
-  if (isIterable(first) || isAsyncIterable(first)) {
+  if (
+    (isIterable(first) || isAsyncIterable(first)) &&
+    // first could be an iterable that's not "Iter" but a condition
+    args.filter((x) => x).length > 0
+  ) {
     return chooseFunc(first, func, afunc, ...args)
   } else {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

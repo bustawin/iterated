@@ -9,12 +9,12 @@ expectType<It<string>>(a1)
 
 const p1 = it.pipe(
   [1, 2, 3],
-  it.filter.p((x) => x > 4),
+  it.filter((x) => x > 4),
 )
 expectType<It<number>>(p1)
 
-const p2 = it.pipe('foo', it.filter.p('o'))
+const p2 = it.pipe('foo', it.filter('o'))
 expectType<It<string>>(p2)
 
-const p3 = it.pipe(it.async([1, 2, 3]), it.filter.p(4))
+const p3 = it.pipe(it.async([1, 2, 3]), it.filter(4))
 expectType<AIt<number>>(p3)

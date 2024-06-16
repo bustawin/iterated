@@ -18,6 +18,12 @@ describe('any', () => {
         expect(result).toBe(false)
       })
     })
+    describe('When running in a pipe', () => {
+      test('Returns correctly', () => {
+        const result = it.pipe(iterable, it.any(3))
+        expect(result).toBe(false)
+      })
+    })
   })
   describe('when passing an async iterable', () => {
     describe('When the condition matches', () => {
