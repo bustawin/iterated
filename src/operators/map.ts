@@ -13,17 +13,18 @@ import { curry } from '../iterators'
  * Returns an Iterable populated with the results of calling
  * a function for every element of the passed-in iterable.
  *
+ * @param iter - An iterable or async iterable.
  * @param func - The function used to map each element.
  * @return An Iterable or AsyncIterable with each element
  * being the result of func.
  */
 export function map<Iter extends AnyIt<unknown>, R>(
-  func: ValFunc<AnyItV<Iter>, R>,
-): CurriedAnyItResultIt<Iter, R>
-export function map<Iter extends AnyIt<unknown>, R>(
   iter: Iter,
   func: ValFunc<AnyItV<Iter>, R>,
 ): AnyItResultIt<Iter, R>
+export function map<Iter extends AnyIt<unknown>, R>(
+  func: ValFunc<AnyItV<Iter>, R>,
+): CurriedAnyItResultIt<Iter, R>
 export function map<Iter extends AnyIt<unknown>, R>(
   iter: Iter | ValFunc<AnyItV<Iter>, R>,
   func?: ValFunc<AnyItV<Iter>, R>,
