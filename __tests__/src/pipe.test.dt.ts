@@ -34,4 +34,4 @@ const e = it.pipe(
   it.await,
   it.filter(({ success }) => success),
 )
-expectType<AIt<number>>(e)
+expectType<AIt<{ success: boolean }>>(e)
