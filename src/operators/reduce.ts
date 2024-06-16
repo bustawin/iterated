@@ -46,7 +46,7 @@ async function _aReduce<V, U = V>(
   return previousValue as U
 }
 
-export function _reduce<V, U = V>(
+function _reduce<V, U = V>(
   iter: It<unknown>,
   func: (previousValue: U, currentValue: V) => U,
   initialValue?: (U extends typeof notDefined ? never : U) | typeof notDefined,

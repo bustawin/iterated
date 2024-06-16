@@ -16,7 +16,8 @@
     "lint:fix": "eslint 'src/**/*.{js,ts}' --fix",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,md}'",
     "check-format": "prettier --check 'src/**/*.{ts,tsx,js,jsx,json,md}'",
-    "test:type": "jest --config jest.config.tsd.js"
+    "test:type": "jest --config jest.config.tsd.js",
+    "doc": "npx typedoc src/__doc__.ts --githubPages false"
   },
   "keywords": [
     "iterable",
@@ -46,6 +47,7 @@
     "ts-jest": "^29.1.1",
     "tsc-alias": "^1.8.8",
     "tsd-lite": "^0.8.0",
+    "typedoc": "^0.25.13",
     "typescript": "^5.2.2"
   },
   "jest": {

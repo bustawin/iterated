@@ -21,6 +21,10 @@ export function filter<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   iter: Iter,
   condition: V | Matcher<V>,
 ): AnyItResultIt<Iter, V>
+/**
+ * This is the curried form of filter.
+ * @param condition
+ */
 export function filter<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   condition: V | Matcher<V>,
 ): CurriedAnyItResultIt<Iter, V>
