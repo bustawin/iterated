@@ -1,25 +1,35 @@
-import { AIt, AnyIt, AnyItV, It, Matcher } from '../base'
-import { chooseFunc, iterator, next } from '../iterators'
+import { AIt, AnyIt, AnyItResult, AnyItV, CurriedAnyItResult, It, Matcher } from '../base'
+import { curry, iterator, next } from '../iterators'
 import { filter } from './filter'
-import { toPipe } from '../pipe'
 
 /**
  * Checks if any element in the given iterable satisfies the given condition.
  *
  * If the condition is a value, this becomes an `includes()` function.
  *
- * @param iter - The iterable to check.
+ * @param iter - The iterable or async iterable to check.
  * @param condition - The condition to satisfy.
  * @return Returns true if any element satisfies the condition, otherwise false.
  */
 export function any<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   iter: Iter,
   condition: V | Matcher<V>,
+): AnyItResult<Iter, boolean>
+export function any<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
+  condition: V | Matcher<V>,
+): CurriedAnyItResult<Iter, boolean>
+export function any<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
+  iter: Iter | V | Matcher<V>,
+  condition?: V | Matcher<V>,
 ) {
-  return chooseFunc(iter, _any, _aAny, condition)
+  return curry(
+    // @ts-ignore fix in the future
+    _any,
+    _aAny,
+    iter,
+    condition,
+  )
 }
-
-any.p = toPipe(any)
 
 function _any<V>(iter: It<V>, condition: V | Matcher<V>): boolean {
   const result = next(iterator(filter(iter, condition)))
