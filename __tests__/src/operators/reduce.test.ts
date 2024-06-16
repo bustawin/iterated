@@ -25,7 +25,7 @@ describe('reduce', () => {
     test('works with pipe', () => {
       const result = it.pipe(
         [1, 2, 3],
-        it.reduce.p((a, b) => `${a}${b}`, '0'),
+        it.reduce((a, b) => `${a}${b}`, '0'),
       )
       expect(result).toEqual('0123')
     })
@@ -57,7 +57,7 @@ describe('reduce', () => {
       const result = await it.pipe(
         [1, 2, 3],
         it.async,
-        it.reduce.p((a, b) => `${a}${b}`, '0'),
+        it.reduce((a, b) => `${a}${b}`, '0'),
       )
       expect(result).toEqual('0123')
     })

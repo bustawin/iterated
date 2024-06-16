@@ -14,7 +14,7 @@ expectType<It<string>>(s3)
 
 const p1 = it.pipe(
   it.range(5),
-  it.map.p((x) => [x]),
+  it.map((x) => [x]),
   it.flatten,
 )
 expectType<It<number>>(p1)

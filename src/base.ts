@@ -4,6 +4,20 @@ export type AnyIt<T> = It<T> | AIt<T>
 export type AnyItV<Iter> = Iter extends AnyIt<infer U> ? U : never
 export type AnyIterator<V> = Iterator<V> | AsyncIterator<V>
 export type AnyIteratorV<Iter> = Iter extends AnyIterator<infer U> ? U : never
+export type CondIt<Iter, A, B> = Iter extends It<unknown> ? A : B
+export type AnyItResult<Iter, A> = Iter extends It<unknown> ? A : Promise<A>
+export type AnyItResultIt<Iter, A> = Iter extends It<unknown> ? It<A> : AIt<A>
+export type CurriedAnyItResult<Iter, A> = (
+  iter: Iter,
+) => Iter extends It<unknown> ? A : Promise<A>
+export type CurriedAnyItResultIt<Iter, A> = (
+  iter: Iter,
+) => Iter extends It<unknown> ? It<A> : AIt<A>
+export type ItFunc<V, P extends unknown[], R> = (iter: It<V>, ...args: P) => R
+export type AItFunc<V, P extends unknown[], R> = (iter: AIt<V>, ...args: P) => R
+export type ValOrNotDefined<V> =
+  | (V extends typeof notDefined ? never : V)
+  | typeof notDefined
 
 export interface ValFunc<V, R> {
   (val: V): R

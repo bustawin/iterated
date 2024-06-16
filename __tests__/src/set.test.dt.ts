@@ -7,7 +7,7 @@ expectType<Set<number>>(s1)
 const a1 = it.set(it.async('foo'))
 expectType<Promise<Set<string>>>(a1)
 
-const p1 = it.pipe([1, 2], it.map.p(it.identity), it.set)
+const p1 = it.pipe([1, 2], it.map(it.identity), it.set)
 expectType<Set<number>>(p1)
 
 const c1 = it.set<number>()

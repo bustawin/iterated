@@ -20,7 +20,7 @@ const p1 = it.pipe(
     [1, 'foo'],
     [2, 'bar'],
   ] as [number, string][],
-  it.map.p(it.identity),
+  it.map(it.identity),
   it.Map,
 )
 expectType<Map<number, string>>(p1)

@@ -20,19 +20,34 @@ expectType<string>(s4)
 
 const p1 = it.pipe(
   [1, 2, 3],
-  it.reduce.p((prev, curr) => `${prev} ${curr}`, ''),
+  it.reduce((prev, curr) => `${prev} ${curr}`, ''),
 )
 expectType<string>(p1)
 
 const p2 = it.pipe(
   ['foo', 'bar'],
-  it.reduce.p((prev, curr) => `${prev} ${curr}`),
+  it.reduce((prev, curr) => `${prev} ${curr}`),
 )
 expectType<string>(p2)
 
 const a1 = it.pipe(
   ['foo', 'bar'],
   it.async,
-  it.reduce.p((prev, curr) => `${prev} ${curr}`),
+  it.reduce((prev, curr) => `${prev} ${curr}`),
 )
 expectType<Promise<string>>(a1)
+
+const p3 = it.pipe(
+  [{ foo: '123' }, { foo: 'bar' }, { foo: 'baz' }],
+  it.async,
+  it.map((x) => x['foo'] + 'mapped'),
+  it.reduce((prev, curr) => prev + curr.length, 0),
+)
+expectType<Promise<number>>(p3)
+
+const p4 = it.pipe(
+  [{ foo: '123' }, { foo: 'bar' }, { foo: 'baz' }],
+  it.map((x) => x['foo'] + 'mapped'),
+  it.reduce((prev, curr) => prev + curr),
+)
+expectType<string>(p4)

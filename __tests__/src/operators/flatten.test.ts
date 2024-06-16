@@ -23,7 +23,7 @@ describe('flatten', () => {
       const result = await it.pipe(
         it.range(6),
         it.async,
-        it.map.p((num) => [num]),
+        it.map((num) => [num]),
         it.flatten,
         it.array,
       )

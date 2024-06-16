@@ -1,4 +1,14 @@
-import { AIt, AnyIt, AnyIterator, AnyIteratorV, AnyItV, It, NoValueToGet } from './base'
+import {
+  AIt,
+  AItFunc,
+  AnyIt,
+  AnyIterator,
+  AnyIteratorV,
+  AnyItV,
+  CondIt,
+  ItFunc,
+  NoValueToGet,
+} from './base'
 
 export function iterator<T>(iter: Iterable<T>): Iterator<T>
 export function iterator<T>(aIter: AsyncIterable<T>): AsyncIterator<T>
@@ -43,7 +53,7 @@ export function isIterable<T>(value: unknown): value is Iterable<T> {
   return value != null && typeof value[Symbol.iterator] === 'function'
 }
 
-export function isAsyncIterable<T>(value: object): value is AIt<T> {
+export function isAsyncIterable<T>(value: unknown): value is AIt<T> {
   // @ts-ignore: typescript can't understand this
   return value != null && typeof value[Symbol.asyncIterator] === 'function'
 }
@@ -70,10 +80,10 @@ export function chooseFunc<
   R1,
 >(
   iter: Iter,
-  func: (iter: It<V>, ...args: P) => R,
-  afunc: (iter: AIt<V>, ...args: P) => R1,
+  func: ItFunc<V, P, R>,
+  afunc: AItFunc<V, P, R1>,
   ...args: P
-): Iter extends It<unknown> ? R : R1 {
+): CondIt<Iter, R, R1> {
   if (isIterable<AnyItV<Iter>>(iter)) {
     // @ts-ignore: typescript can't understand returning only R is ok here
     return func(iter, ...args)
@@ -83,4 +93,37 @@ export function chooseFunc<
     return afunc(iter, ...args)
   }
   throw new TypeError('iter is not an Iterable or an AsyncIterable')
+}
+
+export function curry<
+  Iter extends AnyIt<unknown> extends AnyIt<unknown> ? AnyIt<unknown> : never,
+  V extends AnyItV<Iter>,
+  P extends unknown[],
+  R,
+  R1,
+>(
+  func: ItFunc<V, P, R>,
+  afunc: AItFunc<V, P, R1>,
+  iter: Iter,
+  ...args: P
+): CondIt<Iter, R, R1>
+export function curry<
+  Iter extends AnyIt<unknown>,
+  V extends AnyItV<Iter>,
+  P extends unknown[],
+  R,
+  R1,
+>(
+  func: ItFunc<V, P, R>,
+  afunc: AItFunc<V, P, R1>,
+  ...args: P
+): (iter: Iter) => CondIt<Iter, R, R1>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function curry(func: any, afunc: any, first: any, ...args: any[]) {
+  if (isIterable(first) || isAsyncIterable(first)) {
+    return chooseFunc(first, func, afunc, ...args)
+  } else {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (iter: any) => chooseFunc(iter, func, afunc, first, ...args)
+  }
 }

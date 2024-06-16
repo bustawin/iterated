@@ -1,22 +1,34 @@
-import { AIt, AnyIt, AnyItV, It, notDefined } from '@src/base'
-import { chooseFunc, iterator, next, nextValue } from '../iterators'
+import {
+  AIt,
+  AnyIt,
+  AnyItResult,
+  AnyItV,
+  CurriedAnyItResult,
+  It,
+  notDefined,
+  ValOrNotDefined,
+} from '@src/base'
+import { curry, iterator, next, nextValue } from '../iterators'
 import { toPipe } from '../pipe'
+
+export type Reducer<U, V> = (previousValue: U, currentValue: V) => U
 
 /**
  * Reducer function such as {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce|Array.reduce} but
  * accepting an iterable.
  */
 export function reduce<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, U = V>(
+  func: Reducer<U, V>,
+  initialValue?: ValOrNotDefined<U>,
+): CurriedAnyItResult<Iter, U>
+export function reduce<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, U = V>(
   iter: Iter,
-  func: (previousValue: U, currentValue: V) => U,
-  initialValue:
-    | (U extends typeof notDefined ? never : U)
-    | typeof notDefined = notDefined,
-) {
-  return chooseFunc(iter, _reduce, _aReduce, func, initialValue)
+  func: Reducer<U, V>,
+  initialValue?: ValOrNotDefined<U>,
+): AnyItResult<Iter, U>
+export function reduce(first: any, second: any = notDefined, third: any = notDefined) {
+  return curry(_reduce, _aReduce, first, second, third)
 }
-
-reduce.p = toPipe(reduce)
 
 async function _aReduce<V, U = V>(
   iter: AIt<unknown>,
