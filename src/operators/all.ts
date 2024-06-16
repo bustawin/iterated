@@ -11,10 +11,35 @@ import {
 import { any } from './any'
 import { curry } from '@src/iterators'
 
+/**
+ * Return `true` if, for each element of the iterable,
+ * the result of executing `condition` is truthy.
+ * @param iter - A sync or async iterable.
+ * @param condition - Either a function that accepts an element of
+ * the iterable and returns a boolean, or directly a value to check equality against.
+ *
+ * @example
+ * // Returns true
+ * it.all([1, 2, 3], x => x < 10)
+ *
+ * @example
+ * // Returns true
+ * it.all([1, 1, 1], 1)
+ *
+ */
 export function all<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   iter: Iter,
   condition: V | Matcher<V>,
 ): AnyItResult<Iter, boolean>
+/**
+ * Pipe version of `all`.
+ *
+ * @example
+ * // Returns true
+ * it.pipe(it.range(2), it.all(x => x < 4))
+ *
+ * @param condition
+ */
 export function all<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   condition: V | Matcher<V>,
 ): CurriedAnyItResult<Iter, boolean>

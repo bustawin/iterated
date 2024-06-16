@@ -28,10 +28,10 @@ const d = it.pipe(
 expectType<AIt<number[]>>(d)
 
 const e = it.pipe(
-  [1, 2, 3],
-  it.map((x) => Promise.resolve(x)),
+  [true, false, true],
+  it.map((x) => Promise.resolve({ success: x })),
   it.async,
   it.await,
-  it.map((x) => x),
+  it.filter(({ success }) => success),
 )
 expectType<AIt<number>>(e)
