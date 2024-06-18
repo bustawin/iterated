@@ -3,11 +3,6 @@
 Functional methods (e.g. `pipe`, `map`, `group`) to work with Javascript Iterables—with prime
 typing support.
 
-* Simple to use.
-* Transparently handle `pipes` (currying) and sync and async iterables.
-* Typing inference through the pipeline, helping to understand how data changes.
-* [Read the documentation](https://bustawin.github.io/iterated/).
-
 ```shell
 npm install iterated
 ```
@@ -23,13 +18,25 @@ We can work with `pipes` of data, processing sync and async iterables
 transparently.
 
 ```typescript
+const result = it.pipe(
+  [
+    { foo: 1, baz: 'x' },
+    { foo: 2, baz: 'x' },
+  ],
+  it.map((item) => item['foo'])
+)
+```
 
+In the case above, Typescript inferences that `result` is an `Iterator<number>`.
+
+`AsyncIterator` is amazing when handling promises:
+
+```typescript
 const result = it.pipe(
   [true, false, true],
   it.map((x) => Promise.resolve({ success: x })),  // eg. fetch something from a server
-  it.async,
-  it.await,
-  it.filter(({ success }) => success), // eg. get only successful results
+  it.await, // await each promise, returning an async iterator
+  it.filter(({ success }) => success), // now filter function doesn't have to handle any promise
 )
 ```
 
@@ -47,14 +54,16 @@ In the case above, Typescript inferences that `myArray` is of type `{success: bo
 
 Working with iterators means that:
 
-* The library is speedy and introduces little overhead (at the bottom we iterate
+* The library is speedy and introduces little overhead (that's because we iterate
   with [`for ... of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)).
 * We only iterate once.
 * RAM consumption is low, as we don't compute intermediate data structures (unless required by the
   algorithm).
-* We are compatible by default with any other library accepting the iterator protocol.
+* We are compatible with any other library accepting the iterator protocol.
 * We support arrays, strings, Maps, Sets...
 * Makes extending this library easy and in a decoupled way.
+
+Extending the library is as follows:
 
 ```typescript
 function doStuffWithDevices(devices: Iterable<Device>): Iterable<Device> {
@@ -69,13 +78,12 @@ You can achieve it simply by doing:
 ```typescript
 import { toPipe } from 'iterated'
 
-function doStuffWithDevices(devices: Iterable<Device>, aParam: () => void): Iterable<Device> {
+function doStuffWithDevices(devices: Iterable<Device>, aParam: () => number): Iterable<Device> {
 }
 
 const doStuffWithDevicesPipe = toPipe(doStuffWithDevices)
 
-const result = it.pipe([{ id: 'device-1' }], doStuffWithDevicesPipe(() => {
-}))
+const result = it.pipe([{ id: 'device-1' }], doStuffWithDevicesPipe(() => 5))
 ```
 
 Checkout how we curry in our code for more intricate examples.
@@ -110,6 +118,16 @@ wouldn't like to have an explosion of them, specially if there are easily compos
 
 Functions should allow currying and working with sync and async iterables transparently,
 and have good Typescript support.
+
+### Publishing
+
+In order to publish this repo:
+
+```shell
+1. Ensure tests are green `npm test && npm run test:type`
+2. Build the project `npm run build`
+3. Publish `npm publish`
+```
 
 ## License
 

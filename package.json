@@ -1,6 +1,6 @@
 {
   "name": "iterated",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Functional methods (e.g. pipe, map, groupBy) to work with Javascript Iterables—with prime typing support.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

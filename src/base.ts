@@ -46,13 +46,20 @@ export class NotFound<T> extends Error {
   }
 }
 
+/**
+ * Transforms an `Iterable` to an `AsyncIterable`.
+ */
 export async function* async<V>(it: It<V>): AIt<V> {
   for (const item of it) {
     yield item
   }
 }
 
-export async function* await_<V>(it: AIt<Promise<V>>): AIt<V> {
+/**
+ * Given an async iterator whose values are promises, returns an async iterator
+ * that awaits each promise.
+ */
+export async function* await_<V>(it: AnyIt<Promise<V>>): AIt<V> {
   for await (const value of it) {
     yield value
   }
