@@ -1,6 +1,13 @@
 import { AIt, AnyIt, It } from './base'
 import { chooseFunc } from '@src/iterators'
 
+/**
+ * Transforms an iterable to an array.
+ *
+ * @example
+ * // Returns [1, 2, 3]
+ * it.array('123')
+ */
 function _array<IterValue>(iter: It<IterValue>): IterValue[] {
   return [...iter]
 }

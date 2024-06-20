@@ -13,6 +13,9 @@ function _set<V>(iter: Iterable<V>): Set<V> {
   return new Set(iter)
 }
 
+/**
+ * Transforms an iterable into a set, like calling `new Set(iterable)`
+ */
 export default function set<V, Iter extends AnyIt<unknown> = It<V>>(
   iter: Iter = [] as never,
 ) {

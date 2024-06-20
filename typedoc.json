@@ -1,0 +1,11 @@
+{
+  "githubPages": false,
+  "cname": "iterated.busta.win",
+  "navigationLinks": {
+    "Repository": "https://github.com/bustawin/iterated",
+    "Issue tracker": "https://github.com/bustawin/iterated/issues",
+    "npm": "https://www.npmjs.com/package/iterated"
+  },
+  "excludeNotDocumented": true,
+  "excludeInternal": true
+}

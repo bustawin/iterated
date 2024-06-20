@@ -9,6 +9,10 @@ export type AnyItItV<Iter> = Iter extends AnyIt<infer U>
 
 /**
  * Flattens one level the passed-in nested iterable.
+ *
+ * @example
+ * // Returns an Iterable representing [1, 2, 3]
+ * it.flatten([[1], [2], [3]])
  */
 export function flatten<Iter extends AnyIt<It<V>>, V = AnyItItV<Iter>>(iter: Iter) {
   return chooseFunc(iter, _flatten, _aFlatten)

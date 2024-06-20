@@ -7,11 +7,16 @@ type Comparator<V> = (a: V, b: V) => number
 
 /**
  * Return a new sorted array from the passed-in iterable. This function
- * internally calls the {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort|Array.sort}
+ * internally calls the [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
  * method, passing `comparator`.
+ *
+ * @example
+ * // Returns [1, 2, 3]
+ * it.reduce([3, 1, 2], (a, b) => a - b)
  *
  * @param iter
  * @param comparator
+ * @return An array.
  */
 export function sort<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>>(
   iter: Iter,

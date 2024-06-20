@@ -12,6 +12,31 @@ import {
 } from '../base'
 import { curry, iterator, next } from '../iterators'
 
+/**
+ * Returns the first matching value. If the value is not found return `def`,
+ * and if `def` is not defined throw `NotFound`.
+ *
+ * @example
+ * // Returns 2
+ * it.filter([1, 2, 3], x => x == 2)
+ *
+ * @example
+ * // Returns 2
+ * it.filter([1, 2, 3], 2)
+ *
+ * @example
+ * // Returns 10
+ * it.filter([1, 2, 3], -1, 10)
+ *
+ * @example
+ * // Throws NotFound
+ * it.filter([1, 2, 3], -1)
+ *
+ * @param iter - The iterable to find against.
+ * @param condition - A value or a matcher function.
+ * @param def - The default value to return if no value has been found.
+ * @throws NotFound - No value has been found and `def` is not defined.
+ */
 export function find<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, D = V>(
   iter: Iter,
   condition: V | Matcher<V>,

@@ -14,6 +14,19 @@ import { curry } from '@src/iterators'
 /**
  * Groups the passed-in iterable by the given key.
  *
+ * @example
+ * // Returns Map(1: [1, 1], 2: [2, 2], 3: [3])
+ * it.group([1, 1, 2, 2, 3])
+ *
+ * @example
+ * // Returns Map(true: [1, 1], false: [2, 2, 3])
+ * it.group([1, 1, 2, 2, 3], x => x < 2)
+ *
+ *
+ * @example
+ * // Returns Map(1: [{id: 1}], 2: [{id: 2}])
+ * it.group([{id: 1}, {id: 2}], x => x.id)
+ *
  * @param iter A sync or async iterable.
  * @param key A function computing the key, such as `item => item['foo']`. Key
  * defaults to an identity function, grouping duplicated values.

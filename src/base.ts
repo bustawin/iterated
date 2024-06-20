@@ -57,7 +57,16 @@ export async function* async<V>(it: It<V>): AIt<V> {
 
 /**
  * Given an async iterator whose values are promises, returns an async iterator
- * that awaits each promise.
+ * that awaits each promise. Use it as `it.await(...)`.
+ *
+ * @example
+ * const result = it.pipe(
+ *   [true, false, true],
+ *   it.map((x) => Promise.resolve({ success: x })),  // eg. fetch something from a server
+ *   it.await, // await each promise, returning an async iterator
+ *   it.filter(({ success }) => success), // await is transparently handling the promise for you
+ * )
+ *
  */
 export async function* await_<V>(it: AnyIt<Promise<V>>): AIt<V> {
   for await (const value of it) {

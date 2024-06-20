@@ -1,6 +1,12 @@
 import { AIt, AnyIt, It } from '@src'
 import { chooseFunc, iterator, next } from '../iterators'
 
+/**
+ * Iterates the iterable until exhausting it.
+ *
+ * @example
+ * it.consume([1, 2, 3])
+ */
 export function consume<Iter extends AnyIt<unknown>>(iter: Iter) {
   return chooseFunc(iter, _consume, _aConsume)
 }

@@ -7,6 +7,10 @@ import { filter } from './filter'
  *
  * If the condition is a value, this becomes an `includes()` function.
  *
+ * @example
+ * // Returns true
+ * it.all([1, 20], x => x < 10)
+ *
  * @param iter - The iterable or async iterable to check.
  * @param condition - The condition to satisfy.
  * @return Returns true if any element satisfies the condition, otherwise false.

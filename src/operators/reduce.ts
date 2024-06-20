@@ -13,8 +13,16 @@ import { curry, iterator, next, nextValue } from '../iterators'
 export type Reducer<U, V> = (previousValue: U, currentValue: V) => U
 
 /**
- * Reducer function such as {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce|Array.reduce} but
- * accepting an iterable.
+ * Reducer function such as [Array.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce})
+ * but accepting an iterable.
+ *
+ * @example
+ * // Returns 6
+ * it.reduce([1, 2, 3], (num, acc) => num + acc)
+ *
+ * @example
+ * // Returns 7
+ * it.reduce([1, 2, 3], (num, acc) => num + acc, 1)
  */
 export function reduce<Iter extends AnyIt<unknown>, V extends AnyItV<Iter>, U = V>(
   func: Reducer<U, V>,

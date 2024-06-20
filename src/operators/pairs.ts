@@ -6,7 +6,8 @@ import { chooseFunc, iterator, next } from '@src/iterators'
  * two values it returns empty.
  *
  * @example
- * pairs('ABCDEFG') // Returns AB BC CD DE EF FG
+ * // Returns an iterable representing ['AB','BC','CD','DE','EF','FG']
+ * pairs('ABCDEFG')
  *
  * @param iter A sync or async iterable.
  * @return Returns an iterable whose values are lists of two elements.

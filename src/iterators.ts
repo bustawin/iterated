@@ -10,6 +10,15 @@ import {
   NoValueToGet,
 } from './base'
 
+/**
+ * Returns `Iterator` from `Iterable` and `AsyncIterator` from `AsyncIterable`.
+ *
+ * @example
+ * // Returns Iterator<number>
+ * it.iterator([1, 2, 3])
+ *
+ * @param iter
+ */
 export function iterator<T>(iter: Iterable<T>): Iterator<T>
 export function iterator<T>(aIter: AsyncIterable<T>): AsyncIterator<T>
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -19,6 +28,10 @@ export function iterator(iter) {
   return iter[Symbol.asyncIterator]()
 }
 
+/**
+ * Calls the `next` method of an iterator.
+ * @param iter
+ */
 export function next<T>(iter: Iterator<T>): IteratorResult<T>
 export function next<T>(aIter: AsyncIterator<T>): Promise<IteratorResult<T>>
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -27,6 +40,20 @@ export function next(iter) {
   return iter.next()
 }
 
+/**
+ * Returns the next value of an iterator, or throws `NoValueToGet` if the
+ * iterator is done.
+ *
+ * @example
+ * // Returns 1
+ * it.nextValue(it.iterator([1, 2, 3]))
+ *
+ * @example
+ * // Throws NoValueToGet
+ * it.nextValue(it.iterator([]))
+ *
+ * @throws NoValueToGet
+ */
 export function nextValue<Iter extends AnyIterator<V>, V = AnyIteratorV<Iter>>(
   iter: Iter,
 ): Iter extends Iterator<unknown> ? V : Promise<V> {
@@ -48,11 +75,19 @@ async function _aNextValue<V>(iter: AsyncIterator<V>) {
   return r.value
 }
 
+/**
+ * Returns whether the value is `Iterable`, meaning that supports the iterator
+ * protocol.
+ */
 export function isIterable<T>(value: unknown): value is Iterable<T> {
   // @ts-ignore: typescript can't understand this
   return value != null && typeof value[Symbol.iterator] === 'function'
 }
 
+/**
+ * Returns whether the value is `AsyncIterable`, meaning that supports the async
+ * iterator protocol.
+ */
 export function isAsyncIterable<T>(value: unknown): value is AIt<T> {
   // @ts-ignore: typescript can't understand this
   return value != null && typeof value[Symbol.asyncIterator] === 'function'
@@ -65,6 +100,7 @@ export function isIterator<T>(value: object): value is Iterator<T> {
 /**
  * Choose function to apply based on the type of iterable provided.
  *
+ * @internal
  * @param iter - The iterable to be processed.
  * @param  func - The function to be applied to the iterable if it is synchronous.
  * @param  afunc - The function to be applied to the iterable if it is asynchronous.

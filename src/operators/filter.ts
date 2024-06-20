@@ -13,6 +13,14 @@ import { curry } from '@src/iterators'
 /**
  * Filters elements from an iterable on a value or a filtering function.
  *
+ * @example
+ * // Returns an Iterable representing [1, 1]
+ * it.filter([1, 2, 3, 1], x => x < 2)
+ *
+ * @example
+ * // Returns an Iterable representing [1, 1]
+ * it.filter([1, 2, 3, 1], 1)
+ *
  * @param iter - The iterable or async iterable to filter.
  * @param condition - The value or filtering function used for filtering elements.
  * @return The filtered iterable.

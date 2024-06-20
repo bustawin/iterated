@@ -1,8 +1,8 @@
 import { chooseFunc } from '@src/iterators'
-import { AIt, AnyItV, AnyIt, It } from '@src/base'
+import { AIt, AnyIt, AnyItV, It } from '@src/base'
 
 /**
- * If key is in the map, return its value.
+ * Given a `Map`, if key is in the map, return its value.
  * If not, insert key with a value of default and return default.
  *
  * @mutates map
@@ -24,6 +24,10 @@ function _map<K, V>(iter: Iterable<[K, V]>): Map<K, V> {
   return new Map(iter)
 }
 
+/**
+ * Transform an iterable yielding `key: value` values into a `Map` object,
+ * like calling `new Map(iterable)`.
+ */
 export default function map<K, V, Iter extends AnyIt<[K, V]> = It<[K, V]>>(
   iter: Iter = [] as never,
 ): Iter extends It<[unknown, unknown]>

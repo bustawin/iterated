@@ -1,6 +1,6 @@
 {
   "name": "iterated",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Functional methods (e.g. pipe, map, groupBy) to work with Javascript Iterables—with prime typing support.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,7 @@
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,md}'",
     "check-format": "prettier --check 'src/**/*.{ts,tsx,js,jsx,json,md}'",
     "test:type": "jest --config jest.config.tsd.js",
-    "doc": "npx typedoc src/__doc__.ts --githubPages false"
+    "doc": "npx typedoc src/__doc__.ts"
   },
   "keywords": [
     "iterable",

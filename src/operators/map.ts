@@ -13,6 +13,10 @@ import { curry } from '../iterators'
  * Returns an Iterable populated with the results of calling
  * a function for every element of the passed-in iterable.
  *
+ * @example
+ * // Returns an Iterable representing [2, 4, 6]
+ * it.map([1,2,3], x => x * 2)
+ *
  * @param iter - An iterable or async iterable.
  * @param func - The function used to map each element.
  * @return An Iterable or AsyncIterable with each element
