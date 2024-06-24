@@ -8,6 +8,12 @@ import { chooseFunc } from '@src/iterators'
  * // Returns [1, 2, 3]
  * it.array('123')
  */
+export default function array<V, Iter extends AnyIt<unknown> = It<V>>(
+  iter: Iter = [] as never,
+) {
+  return chooseFunc(iter, _array, _aArray)
+}
+
 function _array<IterValue>(iter: It<IterValue>): IterValue[] {
   return [...iter]
 }
@@ -18,10 +24,4 @@ async function _aArray<IterValue>(iter: AIt<IterValue>): Promise<IterValue[]> {
     result.push(value)
   }
   return result
-}
-
-export default function array<V, Iter extends AnyIt<unknown> = It<V>>(
-  iter: Iter = [] as never,
-) {
-  return chooseFunc(iter, _array, _aArray)
 }

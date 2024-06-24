@@ -1,21 +1,26 @@
 # Iterated
 
-Functional methods (e.g. `map`, `group`, `pipe`) to work with
-Javascript Iterables—such as String and Array—with prime typing support.
+Iterated makes working with Typescript iterables (e.g. String, Array)
+feel native, productive, and fun. We provide functional building blocks
+(e.g. `map`, `group`, `pipe`) and great typing support.
 
-Although there are many libraries with a similar purpose (
-e.g. [underscore](https://underscorejs.org),
+Although there are many libraries with a similar purpose
+(e.g. [underscore](https://underscorejs.org),
 [ramda](https://ramdajs.com), [iterate-iterator](https://www.npmjs.com/package/iterate-iterator),
 [iterare](https://www.npmjs.com/package/iterare), [the new built-in methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/map))
 none matches all of the following:
 
-* Great Typescript typing inference.
-* `pipe` support with sensible currying.
-* Uses the iterator protocol—`Iterator` and `AsyncIterator`—handling
-  it transparently. This means that we support `String`, `Array`,
-  `Map`, and `Set` consistently.
-* Just easy to use.
-* Extensible without coupling your code.
+* [`pipe` support with transparent currying](#pipe); it feels natural.
+* Great Typescript typing inference, so you know the shape of
+  your data all the time.
+* [Uses the iterator protocol](#iterable) (i.e. `Iterator`). This means that we
+  support `String`, `Array`, `Map`, and `Set` consistently and transparently.
+* Functions [transform data](#promise-and-asynciterator)
+  between `Promise`, `AsyncIterator`, and `Iterator` trivially.
+* Just easy to use. Methods are based on Javascript functions and
+  Python's itertools package, which makes them understandable, battle tested,
+  and powerful to use.
+* [Extensible](#extending-the-library) without coupling or polluting your code.
 
 ```shell
 npm install iterated
@@ -32,24 +37,75 @@ it.count('AAAABBBCCD')
 
 Read [the docs](http://iterated.busta.win).
 
+## pipe
+
 We can work with `pipes` of data, processing sync and async iterables
 transparently.
 
 ```typescript
+// typescript inferences that result is an `Iterator<number>`
 const result = it.pipe(
   [
     { foo: 1, baz: 'x' },
     { foo: 2, baz: 'x' },
   ],
-  it.map((item) => item['foo'])
+  it.map((item) => item['foo']) // Map is magically curried
 )
 ```
 
-In the case above, Typescript inferences that `result` is an `Iterator<number>`.
+Some functions accept only an iterable:
+
+```typescript
+it.flatten([['foo']]) // First argument is iterable
+it.pipe([['foo']], it.flatten)
+```
+
+Some functions accept multiple parameters, and for that have two forms
+(aka overloads)—the normal one and the pipe one:
+
+```typescript
+it.map(['foo'], x => x) // First argument is iterable
+it.pipe(['foo'], it.map(x => x)) // In pipes we omit the iterable
+```
+
+## Iterable
+
+If we really want to get an array we do as follows:
+
+```typescript
+// typescript inferences that `myArray` is of type `number[]`
+const myArray = await it.pipe(
+  result,
+  it.array
+)
+```
+
+However, in many times you don't really need arrays, but just something to loop at.
+Looping with iterables is natural to Javascript. We do it even if we don't think about it.
+For example, when we
+use [`for ... of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of).
+
+Working with iterables means that:
+
+* We support `Array`, `String`, `Map`, `Set`, `TypedArray`, `Generator`, etc. out of the box.
+* The library is speedy and introduces little overhead; we only iterate once.
+* RAM consumption is low as we don't create intermediate data structures.
+* We are compatible with any other library accepting the iterator protocol.
+
+And we can create multiple pipes, useful when applying many functions:
+
+```typescript
+const ranged = it.pipe(it.range(5))
+const result = it.pipe(ranged, it.count)
+```
+
+## Promise and AsyncIterator
 
 `AsyncIterator` is amazing when handling promises:
 
 ```typescript
+// typescript inferecnes that `result` is of 
+// type `AsyncIterator<{success: boolean}>`
 const result = it.pipe(
   [true, false, true],
   it.map((x) => Promise.resolve({ success: x })),  // eg. fetch something from a server
@@ -58,51 +114,27 @@ const result = it.pipe(
 )
 ```
 
-In the case above, Typescript inferences that `result` is of
-type `AsyncIterator<{success: boolean}>`. If we really want to
-get an array we do as follows:
-
-```typescript
-const myArray = await it.pipe(
-  result,
-  it.array
-)
-```
-
-In the case above, Typescript inferences that `myArray` is of type `{success: boolean}[]`.
-
-Working with iterables means that:
-
-* The library is speedy and introduces little overhead.
-* Looping with iterables is natural to Javascript. We do it even if we don't think about it. For
-  example,
-  when we
-  use [`for ... of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of).
-* We only iterate once.
-* RAM consumption is low as we don't create intermediate data structures.
-* We are compatible with any other library accepting the iterator protocol.
-* We support Array, String, Map, Set, TypedArray, Generator, etc.
-
 ## Reference
 
-* [all](https://bustawin.github.io/iterated/functions/all)
-* [any](https://bustawin.github.io/iterated/functions/any)
-* [consume](https://bustawin.github.io/iterated/functions/consume)
-* [count](https://bustawin.github.io/iterated/functions/count)
-* [filter](https://bustawin.github.io/iterated/functions/filter)
-* [find](https://bustawin.github.io/iterated/functions/find)
-* [flatten](https://bustawin.github.io/iterated/functions/flatten)
-* [group](https://bustawin.github.io/iterated/functions/group)
-* [map](https://bustawin.github.io/iterated/functions/map)
-* [pairs](https://bustawin.github.io/iterated/functions/pairs)
-* [range](https://bustawin.github.io/iterated/functions/range)
-* [reduce](https://bustawin.github.io/iterated/functions/reduce)
-* [size](https://bustawin.github.io/iterated/functions/size)
-* [sort](https://bustawin.github.io/iterated/functions/sort)
-* [pipe](https://bustawin.github.io/iterated/functions/pipe)
-* [toPipe](https://bustawin.github.io/iterated/functions/toPipe)
-* [array](https://bustawin.github.io/iterated/functions/array)
-* [Map](https://bustawin.github.io/iterated/functions/Map)
+* [Map](http://iterated.busta.win/functions/Map)
+* [all](http://iterated.busta.win/functions/all)
+* [any](http://iterated.busta.win/functions/any)
+* [array](http://iterated.busta.win/functions/array)
+* [await](http://iterated.busta.win/functions/await_)
+* [consume](http://iterated.busta.win/functions/consume)
+* [count](http://iterated.busta.win/functions/count)
+* [filter](http://iterated.busta.win/functions/filter)
+* [find](http://iterated.busta.win/functions/find)
+* [flatten](http://iterated.busta.win/functions/flatten)
+* [group](http://iterated.busta.win/functions/group)
+* [map](http://iterated.busta.win/functions/map)
+* [pairs](http://iterated.busta.win/functions/pairs)
+* [pipe](http://iterated.busta.win/functions/pipe)
+* [range](http://iterated.busta.win/functions/range)
+* [reduce](http://iterated.busta.win/functions/reduce)
+* [size](http://iterated.busta.win/functions/size)
+* [sort](http://iterated.busta.win/functions/sort)
+* [toPipe](http://iterated.busta.win/functions/toPipe)
 
 ## Extending the library
 
