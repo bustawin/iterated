@@ -1,116 +1,105 @@
 # Iterated
 
-Iterated makes working with Typescript iterables (e.g. String, Array)
-feel native, productive, and fun. We provide functional building blocks
-(e.g. `map`, `group`, `pipe`) and great typing support.
+A minimalist library that offers lazy functions to work with JavaScript
+collections (e.g., arrays, strings).
 
-Although there are many libraries with a similar purpose
-(e.g. [underscore](https://underscorejs.org),
-[ramda](https://ramdajs.com), [iterate-iterator](https://www.npmjs.com/package/iterate-iterator),
-[iterare](https://www.npmjs.com/package/iterare), [the new built-in methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/map))
-none matches all of the following:
+There are many libraries that reinvent how you transform
+collections of data in JS by using so many patterns and
+functions<sup>[1](#similar-libraries)</sup>
+which are challenging to master, costly to execute, and
+alien to the [Standard JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
 
-* [`pipe` support with transparent currying](#pipe); it feels natural.
-* Great Typescript typing inference, so you know the shape of
-  your data all the time.
-* [Uses the iterator protocol](#iterable) (i.e. `Iterator`). This means that we
-  support `String`, `Array`, `Map`, and `Set` consistently and transparently.
-* Functions [transform data](#promise-and-asynciterator)
-  between `Promise`, `AsyncIterator`, and `Iterator` trivially.
-* Just easy to use. Methods are based on Javascript functions and
-  Python's itertools package, which makes them understandable, battle tested,
-  and powerful to use.
+Iterated offers a distinct and minimalist approach by providing:
+
+* A [set of **lazy** functions](#reference) that you already know how to use:
+  `map`, `filter`, `group`, etc.
+  ```typescript
+  import it from 'iterated'
+  
+  it.map([1, 2, 3], x => x * 2)
+  it.count('AAAABBBCCD')
+  ```
+* A `pipe` function to transform data in a **functional** way.
+  ```typescript
+  const result: Iterator<number> = it.pipe(
+    [
+      { foo: 1, baz: 'x' },
+      { foo: 2, baz: 'x' },
+    ],
+    it.map(item => item['foo']) // Functions are auto-curried to be used in pipes
+  )
+  ```
+* Prime **TypeScript support**, so you can reason how your data changes,
+  and your IDE can warn you when types mismatch mid-pipe.
+* **Only Standard JavaScript** protocols to process collections. This means:
+  * Avoid reinventing the wheel.
+  * Avoid you from learning niche patterns alien to Standard JavaScript.
+  * Reduce your dependency on this library.
+  * Zero dependencies, zero polyfills,
+    and targeting ES2020—fully supported by browsers since 2021.
+* We internally use the
+  [Standard JS Iterator protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol)
+  so each function (e.g., `map`)
+  works exactly the same for `arrays`, `strings`, `sets`, `maps`,
+  and any future or custom data collection.
+  ```typescript
+  it.find([1, 2, 3], 3)
+  it.find('123', '3')
+  ```
+* We internally use
+  the [Standard JS Generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
+  to increase
+  performance, reduce RAM usage, and allow huge and infinite data streams by:
+  * Using lazy functions that **only iterate once**.
+  * Generally **avoiding intermediate collections**.
+* Prime `async` support.
+  For example, you can fetch data from an API in the middle of a
+  pipe, and let Iterated internally transform your `Iterator` to an
+  `AsyncIterator` and continue processing the pipe.
+  ```typescript
+  const result: AsyncIterator<{ ... }> = it.pipe(
+    [true, false, true],
+    it.map(async (x) => await fetch(...)),
+    it.await, // await each promise, returning an async iterator
+    it.filter(({ statusCode }) => statusCode == 200), // iterated is transparently handling the promise for you
+  )
+  ```
 * [Extensible](#extending-the-library) without coupling or polluting your code.
+  As simple as creating a function whose first parameter accepts an Iterator and add it to the
+  pipe.
+
+Checkout
+the [introduction to JavaScript Iterables with Iterated](https://busta.win/posts/iterated).
+
+## Installing
 
 ```shell
 npm install iterated
 ```
+
+## Running
 
 Then, run it as follows:
 
 ```typescript
 import it from 'iterated'
 
-it.map([1, 2, 3], x => x)
+it.map([1, 2, 3], x => x * 2)
 it.count('AAAABBBCCD')
 ```
 
-Read [the docs](http://iterated.busta.win).
-
-## pipe
-
-We can work with `pipes` of data, processing sync and async iterables
-transparently.
+With pipes:
 
 ```typescript
-// typescript inferences that result is an `Iterator<number>`
-const result = it.pipe(
-  [
-    { foo: 1, baz: 'x' },
-    { foo: 2, baz: 'x' },
-  ],
-  it.map((item) => item['foo']) // Map is magically curried
+const result: Iterable<number> = it.pipe(
+  it.range(47),
+  it.pairs,
+  it.map(([a, b]) => a + b),
 )
-```
 
-Some functions accept only an iterable:
-
-```typescript
-it.flatten([['foo']]) // First argument is iterable
-it.pipe([['foo']], it.flatten)
-```
-
-Some functions accept multiple parameters, and for that have two forms
-(aka overloads)—the normal one and the pipe one:
-
-```typescript
-it.map(['foo'], x => x) // First argument is iterable
-it.pipe(['foo'], it.map(x => x)) // In pipes we omit the iterable
-```
-
-## Iterable
-
-If we really want to get an array we do as follows:
-
-```typescript
-// typescript inferences that `myArray` is of type `number[]`
-const myArray = await it.pipe(
+const aSet: Set<number> = it.pipe(
   result,
-  it.array
-)
-```
-
-However, in many times you don't really need arrays, but just something to loop at.
-Looping with iterables is natural to Javascript. We do it even if we don't think about it.
-For example, when we
-use [`for ... of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of).
-
-Working with iterables means that:
-
-* We support `Array`, `String`, `Map`, `Set`, `TypedArray`, `Generator`, etc. out of the box.
-* The library is speedy and introduces little overhead; we only iterate once.
-* RAM consumption is low as we don't create intermediate data structures.
-* We are compatible with any other library accepting the iterator protocol.
-
-And we can create multiple pipes, useful when applying many functions:
-
-```typescript
-const ranged = it.pipe(it.range(5))
-const result = it.pipe(ranged, it.count)
-```
-
-## Promise and AsyncIterator
-
-`AsyncIterator` is amazing when handling promises:
-
-```typescript
-// typescript inferecnes that `result` is of 
-// type `AsyncIterator<{success: boolean}>`
-const result = it.pipe(
-  [true, false, true],
-  it.map((x) => Promise.resolve({ success: x })),  // eg. fetch something from a server
-  it.await, // await each promise, returning an async iterator
-  it.filter(({ success }) => success), // iterated is transparently handling the promise for you
+  it.set
 )
 ```
 
@@ -166,17 +155,21 @@ const result = it.pipe([{ id: 'device-1' }], doStuffWithDevicesPipe(() => 5))
 Checkout how we curry in our code for more intricate examples, like auto-handling
 `Iterator` and `AsyncIterator`.
 
+## Roadmap: towards a 1.0
+
+First, we want to validate the usefulness of the project with some
+engagement, like having a few users and feedback.
+
+We should find together where to improve the API, ironing out inconsistencies and
+adding more functions like `tee` and `zip`.
+
 ## Contributing
 
+We are looking for the first contributors! Be an integral part of this project.
 Fixes, improvements, and issues are welcomed.
-
-We can add more functions (I am myself thinking of adding `tee` and `zip`), although I
-wouldn't like to have an explosion of them, specially if there are easily composable.
 
 Functions should allow currying and working with sync and async iterables transparently,
 and have good Typescript support.
-
-* Author: [bustawin](https://busta.win)
 
 ### Publishing
 
@@ -193,8 +186,20 @@ In order to publish this repo:
 
 1. `npm run doc`
 2. Publish to main branch and let the github action run, publishing
-   the documentation as a github page.
+   the documentation as a Github page.
 
 ## License
 
 This work is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+The authors are:
+
+* [bustawin](https://busta.win)
+
+## Footnotes
+
+#### Similar libraries
+
+Although there are many libraries with a similar purpose, none fully
+match our purpose: [underscore](https://underscorejs.org),
+[ramda](https://ramdajs.com), [iterate-iterator](https://www.npmjs.com/package/iterate-iterator),
+[iterare](https://www.npmjs.com/package/iterare), [the new built-in methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/map).

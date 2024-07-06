@@ -17,7 +17,8 @@
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,md}'",
     "check-format": "prettier --check 'src/**/*.{ts,tsx,js,jsx,json,md}'",
     "test:type": "jest --config jest.config.tsd.js",
-    "doc": "npx typedoc src/__doc__.ts"
+    "doc:build": "npx typedoc src/__doc__.ts",
+    "doc:dev": "npx typedoc --watch src/__doc__.ts"
   },
   "keywords": [
     "iterable",
